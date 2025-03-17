@@ -1,9 +1,4 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-  /* config options here */
-};
-
+/** @type {import('next').NextConfig} */
 const withPWA = require("next-pwa")({
   dest: "public",        // Directorio donde se generará el Service Worker
   disable: process.env.NODE_ENV === "development",
@@ -14,8 +9,6 @@ const withPWA = require("next-pwa")({
 module.exports = withPWA({
   reactStrictMode: true,
   experimental: {
-    appDir: true,        // Habilita el uso de la carpeta "app"
+    appDir: true,        // Habilita la carpeta "app"
   },
 });
-
-export default nextConfig;

@@ -35,7 +35,7 @@ const InstallButton = () => {
 
   return (
     deferredPrompt && (
-      <button onClick={handleInstall} className="p-2 bg-red-500 text-white rounded shadow-md">
+      <button onClick={handleInstall} className="p-2 text-white rounded shadow-md">
         Instalar App
       </button>
     )

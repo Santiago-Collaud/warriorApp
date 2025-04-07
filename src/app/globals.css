@@ -1,4 +1,9 @@
 @import "tailwindcss";
+/* styles/globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@plugin "daisyui";
 
 :root {
   --background: #ffffff;

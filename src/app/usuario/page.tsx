@@ -2,10 +2,16 @@
 import { useState } from "react";
 import Image from "next/image";
 
+import LogoutButton from "../../../components/logOutButton/logoutButton";
+import LabelDatosUsuario from "../../../components/labelDatosUsuario/labelUsuario";
+
 
 export default function UserPage() {
+  const [showDatosClientes, setShowDatosCliente] = useState(false);
+
   const handleUsuario = async () => {
-    alert("boton usuario")
+    //alert("boton usuario")
+    setShowDatosCliente(true)
   }
 
   const handleRutinas = async () => {
@@ -28,13 +34,16 @@ export default function UserPage() {
               alt="logo warrior" 
               width={300} 
               height={300} 
-              className="rounded-t-lg shadow-xl"
+              className="rounded-t-lg shadow-xl m-4"
               priority 
-              />
+              />   
+              <div className="flex items-center ml-auto mr-4">
+                <LogoutButton/>
+              </div>         
           </header>
       </div>
           <div>
-
+            
           </div>
      <div className="bg-gray-200 text-black p-2 mt-auto ">
       <footer className="flex justify-between">
@@ -91,7 +100,22 @@ export default function UserPage() {
               />
           </button>
         </footer>
+
+        {showDatosClientes && (
+        <div className="modal modal-open">
+          <div className="modal-box">
+            <div className='flex justify-end'>
+              <button className='text-white btn btn-sm btn-circle btn-ghost absolute right-1 top-1' onClick={() => setShowDatosCliente(false)}>
+                X
+              </button>
+            </div>
+            <LabelDatosUsuario />
+          </div> 
+        </div>
+      )}
      </div>
+        
+      
         
     </div>
 );

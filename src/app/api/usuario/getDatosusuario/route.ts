@@ -1,8 +1,19 @@
 import { supabase } from '../../../../../lib/supabaseClient';
 
-export async function GET() {
+export async function GET(req: Request) {
   try {
-    // Hacer la consulta incluyendo la relación con la tabla clientes
+    // Obtener los parámetros de búsqueda
+    const { searchParams } = new URL(req.url);
+    const id_usuario = searchParams.get("id_usuario");
+    
+    console.log("id_usuario BACK", id_usuario);
+    if (!id_usuario) {
+      return new Response(
+        JSON.stringify({ error: "id_usuario es requerido" }),
+        { status: 400 }
+      );
+    }
+    
     const { data, error } = await supabase
       .from('usuario_cliente')
       .select(`
@@ -21,21 +32,18 @@ export async function GET() {
           obs_salud,
           activo,
           plan,
-
           grupo_sanguineo (
             id_grupo,
             grupo
           ),
-
           factor_sanguineo (
             id_factor,
             factor
           )
         )
-      `);
+      `)
+      .eq("id", id_usuario);
 
-      //console.log('data BACK', data)
-      
     if (error) {
       console.error('Error al obtener los clientes BACK', error);
       return new Response(
@@ -44,10 +52,7 @@ export async function GET() {
       );
     }
 
-    //console.log(data)
-    
     return new Response(JSON.stringify({ clientes: data }), { status: 200 });
-
   } catch (err) {
     console.error('Error al obtener clientes', err);
     return new Response(

@@ -41,19 +41,20 @@ const LabelDatosUsuario = () => {
   const [error, setError] = useState<string | null>(null);
 
   const fetchClientes = async () => {
+    const id_usuario = localStorage.getItem("id_usuario") || "";
+    console.log("id_usuario front", id_usuario);
     try {
-      const response = await fetch("/api/usuario/getDatosusuario");
+      const response = await fetch(`/api/usuario/getDatosusuario?id_usuario=${id_usuario}`);
       const result = await response.json();
-
       if (response.ok) {
+        console.log("result", result);
         setUsuarios(result.clientes);
-        console.log("result", result.clientes);
       } else {
-        setError(result.error);
+        setError(result.error || "Error al obtener la cantidad de clientes");
       }
     } catch (err) {
-      setError("Error al cargar los clientes");
       console.error("Error al cargar clientes", err);
+      setError("Error al cargar los clientes");
     } finally {
       setLoading(false);
     }

@@ -5,16 +5,31 @@ import InstallButton from "../../components/installButton/InstallButton";
 import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
+  //LOGIN
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  //CAMBIO DE PASSWORD
+  const [newPassword, setNewPassword] = useState("");
+  const [newPasswordConfirm, setNewPasswordConfirm] = useState("");
+  //MOSTRAR LOS PASS
+  const [showPassword, setShowPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  
+  //CREAR CUENTA
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
   const [mail, setMail] = useState("");
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  //MODALES
   const [modalNuevoUsuario, setModalNuevoUsuario] = useState(false);
   const [modalAviso, setModalAviso] = useState(false);
+  const [modalCambioPass, setModalCambioPass] = useState(false);
+
   const router = useRouter();
+
+  const [toggleAceptado, setToggleAceptado] = useState(false);
   
   // Define el estado is_verify a nivel superior (si es necesario cambiarlo)
   const [is_verify] = useState(true);
@@ -22,45 +37,38 @@ export default function LoginPage() {
   const handleLogin = async () => {
     setLoading(true);
     setError("");
+    
 
     //console.log("front", username ," ",password)
-    if(password === '1234')
-      alert("Debe cambiar su contraseña");
-
     try {
       const response = await fetch('/api/auth', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ user_name: username, pass: password }),
       });
-
+  
+      const result = await response.json();
+  
       if (!response.ok) {
-        const { error } = await response.json();
-        setError(error);
-        setLoading(false); // Desactivar loading si hay error
+        if (result.cambioRequerido) {
+          alert("Cambio de contraseña requerido");
+          setModalCambioPass(true);
+          return;
+        }
+  
+        setError(result.error || "Error desconocido");
         return;
       }
-      
-      // Guardar en el localStorage una vez que la autenticación es exitosa
-      const { user, token } = await response.json();
-
-      
-
-      //Guardar el id_usuario y el token en el localStorage
-      //console.log("id_usuario",user.id_usuario)
-      localStorage.setItem('id_usuario', user.id_usuario);
+  
+      const { user, token } = result;
+      localStorage.setItem('id_usuario', user.id);
       localStorage.setItem('jwt_token', token);
-
-      //const id_user_debug = localStorage.getItem('id_usuario')
-      //console.log("id_usuario en login:",id_user_debug)
-
-      // Redirigir al admin
       router.push('/usuario');
     } catch (err) {
-      setError('Error al iniciar sesión');
-      console.error('Error al iniciar sesión:', err);
+      setError("Error al iniciar sesión");
+      console.error("Error:", err);
     } finally {
-      setLoading(false); // Desactivar loading después de la solicitud
+      setLoading(false);
     }
   };
 
@@ -91,6 +99,7 @@ export default function LoginPage() {
       const result = await response.json();
       if (response.ok) {
         alert('Cliente registrado correctamente');
+        setModalCambioPass(false);
       } else {
         alert(`Error: ${result.error}`);
       }
@@ -98,6 +107,39 @@ export default function LoginPage() {
       console.error('Error al registrar el cliente:', error);
     }
   };
+
+  const handleCambioPass = async () => {
+    if (!newPassword || !newPasswordConfirm) {
+      alert("Los campos no pueden estar vacíos");
+      if (newPassword !== newPasswordConfirm) {
+        alert("Las contraseñas no coinciden");
+        return;
+      }
+      return;
+    }
+    try {
+      //console.log("username", username ," ",newPassword)
+      
+      const response = await fetch('/api/usuario/updatePass', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          username: username || null,
+          newPassword: newPassword || null,
+        }),
+      });
+      const result = await response.json();
+      if (response.ok) {
+        alert('cambio de password correcto');
+        setModalCambioPass(false);
+      } else {
+        alert(`Error: ${result.error}`);
+      }
+    } catch (error) {
+      console.error('Error al registrar el cliente:', error);
+    }
+  };
+
 
   return (
     <div>
@@ -138,12 +180,22 @@ export default function LoginPage() {
           />
 
           <input
-            type="password"
+             type={showPassword ? "text" : "password"}
             placeholder="Contraseña"
             className="w-full p-3 mb-4 bg-gray-700 text-white rounded focus:outline-none"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+          <div className="mb-4 flex items-center">
+          <input
+            type="checkbox"
+            id="togglePassword"
+            checked={showPassword}
+            onChange={() => setShowPassword(!showPassword)}
+            className="mr-2 toggle"
+          />
+          <label htmlFor="togglePassword" className="text-sm">Mostrar contraseña</label>
+        </div>
 
           <div className="flex justify-end pb-2">
             <button onClick={() => setModalNuevoUsuario(true)}>crear cuenta</button>
@@ -219,12 +271,23 @@ export default function LoginPage() {
         <div className="modal modal-open">
           <div className="modal-box">
             <h1 className="text-center text-xl font-semibold mb-4">Nuevo Usuario</h1>
-            <p>Se necesita confirmar el envío del formulario para generar el nuevo usuario de Warrior Gym APP</p>
-            <p>Nombre: <strong>{nombre}</strong></p>
-            <p>Apellido: <strong>{apellido}</strong></p>
-            <p>Nombre de usuario: <strong>{username}</strong></p>
-            <p>Email: {mail}</p>
-            <div className="flex justify-between">
+            <p className="text-italic p-2">Se necesita confirmar el envío del formulario para generar el nuevo usuario de Warrior Gym APP</p>
+            <div className="border rounded p-2 mb-4">
+              <p>Nombre: <strong>{nombre}</strong></p>
+              <p>Apellido: <strong>{apellido}</strong></p>
+              <p>Nombre de usuario: <strong>{username}</strong></p>
+              <p>Email: {mail}</p>
+            </div>
+            
+            <input
+                type="checkbox"
+                checked={toggleAceptado}
+                onChange={() => setToggleAceptado(!toggleAceptado)}
+                className="toggle"
+              />
+              <span className="ml-2 text-sm"> Acepto los términos y condiciones</span>
+            
+            <div className="flex justify-between mt-4">
               <button
                 type="button"
                 onClick={() => setModalAviso(false)}
@@ -232,9 +295,11 @@ export default function LoginPage() {
               >
                 Cerrar
               </button>
+              
               <button
                 type="button"
                 className="btn btn-primary w-auto"
+                disabled={!toggleAceptado} // 🔒 solo se activa si el toggle está activado
                 onClick={() => {
                   setModalAviso(false);
                   handleConfirm();
@@ -245,6 +310,75 @@ export default function LoginPage() {
             </div>
           </div>
         </div>
+      )}
+
+      {/*MODAL CAMBIO DE PASS OBLIGATORIO */}
+      {modalCambioPass && (
+        <div className="modal modal-open">
+        <div className="modal-box">
+          <h1 className="text-center text-xl font-semibold mb-4">Cambio de contraseña OBLIGATORIO</h1>
+          <p className="text-italic p-2">Es necesario actualizar su contraseña para ngresar al sistema</p>
+          <div className="border rounded p-2 mb-4">
+          
+            <input
+              type={showNewPassword ? "text" : "password"}
+              placeholder="Password"
+              className="w-full p-3 mb-4 bg-gray-700 text-white rounded focus:outline-none"
+              value={newPassword}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewPassword(e.target.value)}
+            />
+            <div className="mb-4 flex items-center">
+            <input
+              type="checkbox"
+              className="toggle toggle-error" // `toggle-error` es opcional, da color rojo
+              id="togglePassword"
+              checked={showNewPassword}
+              onChange={() => setShowNewPassword(!showNewPassword)}
+            />
+            <label htmlFor="togglePassword" className="ml-2 text-sm">Mostrar contraseñas</label>
+          </div>
+            <input
+              type={showNewPassword ? "text" : "password"}
+              placeholder="repetir password"
+              className="w-full p-3 mb-4 bg-gray-700 text-white rounded focus:outline-none"
+              value={newPasswordConfirm}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewPasswordConfirm(e.target.value)}
+            />
+            
+          </div>
+          
+          <input
+              type="checkbox"
+              
+              checked={toggleAceptado}
+              onChange={() => setToggleAceptado(!toggleAceptado)}
+              className="toggle"
+            />
+            <span className="ml-2 text-sm"> Acepto los términos y condiciones</span>
+          
+          <div className="flex justify-between mt-4">
+            <button
+              type="button"
+              onClick={() => setModalCambioPass(false)}
+              className="btn btn-primary w-auto"
+            >
+              Cerrar
+            </button>
+            
+            <button
+              type="button"
+              className="btn btn-primary w-auto"
+              disabled={!toggleAceptado} // 🔒 solo se activa si el toggle está activado
+              onClick={() => {
+                //setModalCambioPass(false);
+                handleCambioPass();
+              }}
+            >
+              Confirmar
+            </button>
+          </div>
+        </div>
+      </div>
       )}
     </div>
   );

@@ -15,7 +15,13 @@ export async function POST(req: Request) {
   try {
     const { data, error } = await supabase
       .from('usuario_cliente')
-      .select('id, username, pass, pass_is_verify')
+      .select(`
+        username,
+        pass,
+        id,
+        clientes:id_cliente ( id_cliente ),
+        pass_is_verify
+      `)
       .eq('username', user_name)
       .single();
 

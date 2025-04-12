@@ -4,10 +4,12 @@ import Image from "next/image";
 
 import LogoutButton from "../../../components/logOutButton/logoutButton";
 import LabelDatosUsuario from "../../../components/labelDatosUsuario/labelUsuario";
+import LabelPagos from "../../../components/pagos/labelPagos";
 
 
 export default function UserPage() {
   const [showDatosClientes, setShowDatosCliente] = useState(false);
+  const [showPagos, setShowPagos] = useState(false);
 
   const handleUsuario = async () => {
     //alert("boton usuario")
@@ -19,7 +21,8 @@ export default function UserPage() {
   }
 
   const handlePagos = async () => {
-    alert("boton pagos")
+    //alert("boton pagos")
+    setShowPagos(true)
   }
 
   const handleNoticias = async () => {
@@ -101,6 +104,7 @@ export default function UserPage() {
           </button>
         </footer>
 
+      {/* Modal para mostrar los datos del usuario */}
         {showDatosClientes && (
         <div className="modal modal-open">
           <div className="modal-box">
@@ -110,6 +114,20 @@ export default function UserPage() {
               </button>
             </div>
             <LabelDatosUsuario />
+          </div> 
+        </div>
+      )}
+
+      {/* Modal para mostrar los pagos */}
+      {showPagos && (
+        <div className="modal modal-open">
+          <div className="modal-box">
+            <div className='flex justify-end'>
+              <button className='text-white btn btn-sm btn-circle btn-ghost absolute right-1 top-1' onClick={() => setShowPagos(false)}>
+                X
+              </button>
+            </div>
+            <LabelPagos />
           </div> 
         </div>
       )}

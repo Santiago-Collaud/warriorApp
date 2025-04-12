@@ -42,12 +42,13 @@ const LabelDatosUsuario = () => {
 
   const fetchClientes = async () => {
     const id_usuario = localStorage.getItem("id_usuario") || "";
-    console.log("id_usuario front", id_usuario);
+    
+    //console.log("id_usuario front", id_usuario);
     try {
       const response = await fetch(`/api/usuario/getDatosusuario?id_usuario=${id_usuario}`);
       const result = await response.json();
       if (response.ok) {
-        console.log("result", result);
+        //console.log("result", result);
         setUsuarios(result.clientes);
       } else {
         setError(result.error || "Error al obtener la cantidad de clientes");

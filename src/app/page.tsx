@@ -61,8 +61,11 @@ export default function LoginPage() {
       }
   
       const { user, token } = result;
+
       localStorage.setItem('id_usuario', user.id);
+      localStorage.setItem('id_cliente', user?.clientes?.id_cliente);
       localStorage.setItem('jwt_token', token);
+
       router.push('/usuario');
     } catch (err) {
       setError("Error al iniciar sesión");

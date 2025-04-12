@@ -6,7 +6,7 @@ export async function GET(req: Request) {
     const { searchParams } = new URL(req.url);
     const id_usuario = searchParams.get("id_usuario");
     
-    console.log("id_usuario BACK", id_usuario);
+    //console.log("id_usuario BACK", id_usuario);
     if (!id_usuario) {
       return new Response(
         JSON.stringify({ error: "id_usuario es requerido" }),

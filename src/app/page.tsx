@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
-import InstallButton from "../../components/installButton/InstallButton";
+import InstallButton from "./components/installButton/InstallButton";
 import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {

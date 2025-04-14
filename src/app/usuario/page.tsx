@@ -2,14 +2,16 @@
 import { useState } from "react";
 import Image from "next/image";
 
-import LogoutButton from "../../../components/logOutButton/logoutButton";
-import LabelDatosUsuario from "../../../components/labelDatosUsuario/labelUsuario";
-import LabelPagos from "../../../components/pagos/labelPagos";
+import LogoutButton from "../components/logOutButton/logoutButton";
+import LabelDatosUsuario from "../components/labelDatosUsuario/labelUsuario";
+import LabelPagos from "../components/pagos/labelPagos";
+import LabelMensajes from "../components/mensajes/labelMensajes";
 
 
 export default function UserPage() {
   const [showDatosClientes, setShowDatosCliente] = useState(false);
   const [showPagos, setShowPagos] = useState(false);
+  const [showMensajes, setShowMensajes] = useState(false);
 
   const handleUsuario = async () => {
     //alert("boton usuario")
@@ -25,9 +27,12 @@ export default function UserPage() {
     setShowPagos(true)
   }
 
-  const handleNoticias = async () => {
-    alert("boton usuario")
+  const handleMensajes = async () => {
+    alert("boton mensajes")
+    setShowMensajes(true)
+
   }
+
   return (
     <div className="flex flex-col min-h-screen">
       <div>
@@ -90,7 +95,7 @@ export default function UserPage() {
               />
           </button>
           <button 
-            onClick={handleNoticias}
+            onClick={handleMensajes}
             className="bg-indigo-100 m-2 p-1 rounded-md"
             >
              <Image 
@@ -132,10 +137,21 @@ export default function UserPage() {
         </div>
       )}
      </div>
-        
-      
-        
-    </div>
+
+        {/* Modal para mostrar los pagos */}
+      {showMensajes && (
+        <div className="modal modal-open">
+          <div className="modal-box">
+            <div className='flex justify-end'>
+              <button className='text-white btn btn-sm btn-circle btn-ghost absolute right-1 top-1' onClick={() => setShowMensajes(false)}>
+                X
+              </button>
+            </div>
+            <LabelMensajes />
+          </div> 
+        </div>
+      )}
+     </div>
 );
 
 }

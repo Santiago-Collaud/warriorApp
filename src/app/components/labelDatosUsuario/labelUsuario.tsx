@@ -1,69 +1,11 @@
 "use client";
 import { useState, useEffect } from "react";
+import { useUsuario } from "@/../../src/app/components/labelDatosUsuario/hook/useUsuario"; // Importamos el hook
 
-// Tipado para mayor seguridad
-interface GrupoSanguineo {
-  id_grupo: number;
-  grupo: string;
-}
-
-interface FactorSanguineo {
-  id_factor: number;
-  factor: string;
-}
-
-interface Cliente {
-  id_cliente: number;
-  nombre: string;
-  apellido: string;
-  mail: string;
-  celular: string;
-  fecha_nacimiento: string;
-  grupo_sanguineo?: GrupoSanguineo;
-  factor_sanguineo?: FactorSanguineo;
-  obs_salud?: string;
-  activo: boolean;
-  plan: number;
-}
-
-interface Usuario {
-  id: number;
-  created_at: string;
-  username: string;
-  pass: string;
-  id_cliente: number;
-  clientes?: Cliente;
-}
 
 const LabelDatosUsuario = () => {
-  const [usuarios, setUsuarios] = useState<Usuario[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  const fetchClientes = async () => {
-    const id_usuario = localStorage.getItem("id_usuario") || "";
-    
-    //console.log("id_usuario front", id_usuario);
-    try {
-      const response = await fetch(`/api/usuario/getDatosusuario?id_usuario=${id_usuario}`);
-      const result = await response.json();
-      if (response.ok) {
-        //console.log("result", result);
-        setUsuarios(result.clientes);
-      } else {
-        setError(result.error || "Error al obtener la cantidad de clientes");
-      }
-    } catch (err) {
-      console.error("Error al cargar clientes", err);
-      setError("Error al cargar los clientes");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchClientes();
-  }, []);
+  const { loading, error, usuarios } = useUsuario(); // Desestructuramos el hook
+  
 
   return (
     <div className="text-white">

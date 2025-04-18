@@ -1,8 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
-import { Pago } from "@/interface/pago";
 import { usePago } from "./hooks/usePagos";
-
 
 const LabelDatosUsuario = () => {
  

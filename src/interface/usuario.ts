@@ -1,5 +1,4 @@
 
-
 export interface GrupoSanguineo {
     id_grupo: number;
     grupo: string;

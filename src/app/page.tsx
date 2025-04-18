@@ -63,7 +63,11 @@ export default function LoginPage() {
       const { user, token } = result;
 
       localStorage.setItem('id_usuario', user.id);
+
+      //console.log("id_cliente setItem", user?.clientes?.id_cliente);
       localStorage.setItem('id_cliente', user?.clientes?.id_cliente);
+      //console.log("localstotage",localStorage.getItem('id_cliente'));
+
       localStorage.setItem('jwt_token', token);
 
       router.push('/usuario');

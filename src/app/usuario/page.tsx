@@ -5,7 +5,7 @@ import Image from "next/image";
 import LogoutButton from "../components/logOutButton/logoutButton";
 import LabelDatosUsuario from "../components/labelDatosUsuario/labelUsuario";
 import LabelPagos from "../components/pagos/labelPagos";
-import LabelMensajes from "../components/mensajes/labelMensajes";
+import LabelRutina from "../components/labelRutinas/labelRutina";
 
 
 export default function UserPage() {
@@ -51,7 +51,7 @@ export default function UserPage() {
           </header>
       </div>
           <div>
-            
+            <LabelRutina />
           </div>
      <div className="bg-gray-200 text-black p-2 mt-auto ">
       <footer className="flex justify-between">
@@ -147,7 +147,6 @@ export default function UserPage() {
                 X
               </button>
             </div>
-            <LabelMensajes />
           </div> 
         </div>
       )}

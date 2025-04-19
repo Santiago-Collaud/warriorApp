@@ -25,6 +25,8 @@ export async function GET(req: Request) {
     .eq("id_cliente", idClienteNum)
     .maybeSingle();               
 
+  //console.log("Rutina obtenida:", data?.rutina_jsonb);
+
   if (error) {
     console.error("Error en Supabase:", error);
     return new Response(

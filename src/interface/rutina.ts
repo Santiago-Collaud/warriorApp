@@ -12,5 +12,5 @@ export interface DiaRutina {
 export interface Ejercicio {
   nombre: string;
   series?: string;
-  observaciones?: string;
+  repeticiones?: string;
 }

@@ -1,17 +1,42 @@
 "use client";
 import { useState } from "react";
+import { useRouter } from 'next/navigation';
 import { useRutina } from "./hook/useRutina";
-import { Rutina, DiaRutina, Ejercicio } from "@/interface/rutina";
+import { Rutina, Ejercicio } from "@/interface/rutina";
+import { EjercicioSeleccionado } from "@/interface/ejercicioSeleccionado";
 
 export default function LabelRutina() {
   const { rutina, loading, error } = useRutina();
   const [diaSeleccionado, setDiaSeleccionado] = useState<number>(0);
+
+  const [, setEjerciciosSeleccionados] = useState<EjercicioSeleccionado[]>([]);
+  const router = useRouter();
   
-  //console.log("DIA RUTINA", dia_rutina);
+  const handleComenzar = (rutinaItem: Rutina) => {
+    const ejerciciosDia = rutinaItem.dias[diaSeleccionado].ejercicios;
+    const convertidos: EjercicioSeleccionado[] = ejerciciosDia.map((ej) => ({
+      nombre: ej.nombre,
+      series: ej.series,
+      repeticiones: ej.repeticiones,
+      completado: false,
+      observaciones: "",
+      tiempo: 0,
+    }));
+
+    setEjerciciosSeleccionados(convertidos);
+    // Guardar en localStorage
+    localStorage.setItem("rutinaDelDia", JSON.stringify(convertidos));
+
+    // Esto lo vas a cambiar después por router.push y guardar en localStorage
+    console.log("Ejercicios seleccionados:", convertidos);
+    
+    // Redirigir a la página de ejercicio
+    router.push("/ejercicio");
+  };
 
   return (
     <div className="text-white p-4">
-      <h1 className="text-2xl font-bold mb-4">Rutinas de usuario</h1>
+      {/*<h1 className="text-2xl font-bold mb-4">Rutinas de usuario</h1>*/}
 
       {loading && <p>Cargando...</p>}
       {error && <p className="text-red-500">Error: {error}</p>}
@@ -75,9 +100,21 @@ export default function LabelRutina() {
                   </p>
                 )}
               </div>
+              <div className="flex jusify-end mb-4">
+                <button
+                  className="btn btn-soft btn-secondary"
+                  onClick={() => {
+                    handleComenzar(rutinaItem);
+                  }}
+                >
+                  Comenzar
+                </button>
+              </div>
+              
             </div>
           );
         })}
+        
     </div>
   );
 }

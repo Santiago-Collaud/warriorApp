@@ -9,6 +9,11 @@ const LogoutButton = () => {
     const handleLogout = async () => {
         alert("boton logout")
         router.push('/');
+        //localStorage.clear(); //BORARDO DE LOCALSTORAGE
+        localStorage.removeItem('id_usuario'); //BORRANDO UN ITEM DE LOCALSTORAGE
+        localStorage.removeItem('id_cliente');
+        localStorage.removeItem('jwt_token');
+        //localStorage.removeItem('historialRutinas');
     }
   
   return (

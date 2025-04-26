@@ -1,11 +1,13 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
+import { useRouter } from 'next/navigation';
 
 import LogoutButton from "../components/logOutButton/logoutButton";
 import LabelDatosUsuario from "../components/labelDatosUsuario/labelUsuario";
 import LabelPagos from "../components/pagos/labelPagos";
 import LabelRutina from "../components/labelRutinas/labelRutina";
+import LabelMensajes from "../components/mensajes/labelMensajes";
 
 
 export default function UserPage() {
@@ -13,13 +15,16 @@ export default function UserPage() {
   const [showPagos, setShowPagos] = useState(false);
   const [showMensajes, setShowMensajes] = useState(false);
 
+  const router = useRouter();
+
   const handleUsuario = async () => {
     //alert("boton usuario")
     setShowDatosCliente(true)
   }
 
   const handleRutinas = async () => {
-    alert("boton rutinas")
+    //alert("boton rutinas")
+    router.push("/resumenRutina")
   }
 
   const handlePagos = async () => {
@@ -30,7 +35,6 @@ export default function UserPage() {
   const handleMensajes = async () => {
     alert("boton mensajes")
     setShowMensajes(true)
-
   }
 
   return (
@@ -138,7 +142,7 @@ export default function UserPage() {
       )}
      </div>
 
-        {/* Modal para mostrar los pagos */}
+        {/* Modal para mostrar los mensajes */}
       {showMensajes && (
         <div className="modal modal-open">
           <div className="modal-box">
@@ -146,6 +150,7 @@ export default function UserPage() {
               <button className='text-white btn btn-sm btn-circle btn-ghost absolute right-1 top-1' onClick={() => setShowMensajes(false)}>
                 X
               </button>
+              <LabelMensajes />
             </div>
           </div> 
         </div>

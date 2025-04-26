@@ -28,7 +28,7 @@ export default function LabelRutina() {
     localStorage.setItem("rutinaDelDia", JSON.stringify(convertidos));
 
     // Esto lo vas a cambiar después por router.push y guardar en localStorage
-    console.log("Ejercicios seleccionados:", convertidos);
+    //console.log("Ejercicios seleccionados:", convertidos);
     
     // Redirigir a la página de ejercicio
     router.push("/ejercicio");

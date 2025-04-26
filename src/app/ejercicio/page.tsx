@@ -1,69 +1,20 @@
 "use client";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { EjercicioSeleccionado } from "@/interface/ejercicioSeleccionado";
+import { useEjercicio } from "../ejercicio/hook/useEjerccios"; // Importamos el hook
 
 export default function EjercicioPage() {
-  const router = useRouter();
-  const [ejercicios, setEjercicios] = useState<EjercicioSeleccionado[]>([]);
-  const [tiempo, setTiempo] = useState<number>(0);
-  const [activo, setActivo] = useState<boolean>(false);
-
-  // ⏱️ Iniciar cronómetro
-  useEffect(() => {
-    let intervalo: NodeJS.Timeout;
-
-    if (activo) {
-      intervalo = setInterval(() => {
-        setTiempo((prev) => prev + 1);
-      }, 1000);
-    }
-
-    return () => clearInterval(intervalo);
-  }, [activo]);
-
-  // ⏮️ Cargar rutina desde localStorage
-  useEffect(() => {
-    const rutinaGuardada = localStorage.getItem("rutinaDelDia");
-    if (rutinaGuardada) {
-      setEjercicios(JSON.parse(rutinaGuardada));
-    } else {
-      alert("No hay rutina cargada");
-      router.push("/usuario");
-    }
-  }, [router]);
-
-  // 🧠 Formato de tiempo tipo 00:03:21
-  const formatTiempo = (segundos: number) => {
-    const hrs = Math.floor(segundos / 3600);
-    const mins = Math.floor((segundos % 3600) / 60);
-    const secs = segundos % 60;
-    return `${hrs.toString().padStart(2, "0")}:${mins
-      .toString()
-      .padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
-  };
-
-  // ✅ Cambiar estado de completado
-  const toggleCompletado = (index: number) => {
-    const actualizados = [...ejercicios];
-    actualizados[index].completado = !actualizados[index].completado;
-    setEjercicios(actualizados);
-  };
-
-  // 📝 Editar observación
-  const actualizarObservacion = (index: number, texto: string) => {
-    const actualizados = [...ejercicios];
-    actualizados[index].observaciones = texto;
-    setEjercicios(actualizados);
-  };
-
-  // 🔚 Finalizar rutina
-  const finalizarRutina = () => {
-    localStorage.removeItem("rutinaDelDia");
-    router.push("/usuario");
-  };
-
-  return (
+  
+  const { ejercicios,
+          tiempo,
+          activo,
+          formatTiempo,
+          toggleCompletado,
+          actualizarObservacion,
+          finalizarRutina,
+          setActivo,
+          setTiempo,
+          } = useEjercicio(); // Desestructuramos el hook
+  
+    return (
     <div className="p-4 text-white">
       <h1 className="text-2xl font-bold mb-4">Rutina en progreso</h1>
 
@@ -71,18 +22,10 @@ export default function EjercicioPage() {
         <h2 className="text-xl font-semibold">Tiempo transcurrido</h2>
         <p className="text-3xl mt-2">{formatTiempo(tiempo)}</p>
         <div className="flex justify-center gap-4 mt-2">
-          <button
-            className="btn btn-success"
-            onClick={() => setActivo(true)}
-            disabled={activo}
-          >
+          <button className="btn btn-success" onClick={() => setActivo(true)} disabled={activo}>
             Iniciar
           </button>
-          <button
-            className="btn btn-warning"
-            onClick={() => setActivo(false)}
-            disabled={!activo}
-          >
+          <button className="btn btn-warning" onClick={() => setActivo(false)} disabled={!activo}>
             Pausar
           </button>
           <button
@@ -98,7 +41,7 @@ export default function EjercicioPage() {
       </div>
 
       <div className="overflow-x-auto">
-        <table className="table w-full text-sm">
+        <table className="table w-full max-w-[420px] mx-auto p-4 text-sm">
           <thead>
             <tr className="bg-gray-800 text-white">
               <th>✔</th>

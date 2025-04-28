@@ -4,14 +4,13 @@ import Image from "next/image";
 import { useRouter } from 'next/navigation';
 
 import LogoutButton from "../components/logOutButton/logoutButton";
-import LabelDatosUsuario from "../components/labelDatosUsuario/labelUsuario";
 import LabelPagos from "../components/pagos/labelPagos";
 import LabelRutina from "../components/labelRutinas/labelRutina";
 import LabelMensajes from "../components/mensajes/labelMensajes";
 
 
 export default function UserPage() {
-  const [showDatosClientes, setShowDatosCliente] = useState(false);
+  
   const [showPagos, setShowPagos] = useState(false);
   const [showMensajes, setShowMensajes] = useState(false);
 
@@ -19,7 +18,8 @@ export default function UserPage() {
 
   const handleUsuario = async () => {
     //alert("boton usuario")
-    setShowDatosCliente(true)
+    //setShowDatosCliente(true)
+    router.push("/datosUsuarios")
   }
 
   const handleRutinas = async () => {
@@ -113,19 +113,6 @@ export default function UserPage() {
           </button>
         </footer>
 
-      {/* Modal para mostrar los datos del usuario */}
-        {showDatosClientes && (
-        <div className="modal modal-open">
-          <div className="modal-box">
-            <div className='flex justify-end'>
-              <button className='text-white btn btn-sm btn-circle btn-ghost absolute right-1 top-1' onClick={() => setShowDatosCliente(false)}>
-                X
-              </button>
-            </div>
-            <LabelDatosUsuario />
-          </div> 
-        </div>
-      )}
 
       {/* Modal para mostrar los pagos */}
       {showPagos && (

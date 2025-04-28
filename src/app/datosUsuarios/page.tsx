@@ -1,10 +1,10 @@
 "use client";
-import { useUsuario } from "@/../../src/app/components/labelDatosUsuario/hook/useUsuario"; // Importamos el hook
+import { useUsuario } from "../datosUsuarios/hook/useUsuario"; // Importamos el hook
 
 
-const LabelDatosUsuario = () => {
-  const { loading, error, usuarios } = useUsuario(); 
-  
+export default function HistorialRutinas() {
+  const { loading, error, usuarios } = useUsuario();
+
   return (
     <div className="text-white">
       <h1>Datos de usuarios</h1>
@@ -52,7 +52,5 @@ const LabelDatosUsuario = () => {
       ))}
     </div>
   );
-};
-
-export default LabelDatosUsuario;
+}
 

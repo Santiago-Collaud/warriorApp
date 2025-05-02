@@ -24,15 +24,7 @@ export default function ModalEditarUsuario({ usuario, onSave, onClose }: ModalEd
   return (
     <div className="modal modal-open">
       <div className="modal-box bg-gray-900 text-white">
-        <div className="flex justify-end">
-          <button
-            onClick={onClose}
-            className="btn btn-sm btn-circle btn-ghost text-white"
-          >
-            X
-          </button>
-        </div>
-
+       
         <h2 className="text-xl font-bold mb-4 text-center">Editar datos personales</h2>
 
         <div className="flex flex-col gap-4">

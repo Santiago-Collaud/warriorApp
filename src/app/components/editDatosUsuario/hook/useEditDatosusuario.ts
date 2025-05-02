@@ -61,9 +61,10 @@ export const useEditDatosUsuario = (
 
       onSave(json.cliente[0]);
       onClose();
-    } catch (err: any) {
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : "Error desconocido";
       console.error(err);
-      setError(err.message || "Error al actualizar");
+      setError(errorMessage || "Error al actualizar");
     } finally {
       setLoading(false);
     }

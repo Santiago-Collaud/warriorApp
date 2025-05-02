@@ -1,24 +1,39 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
+import { useRouter } from 'next/navigation';
+
+import LogoutButton from "../components/logOutButton/logoutButton";
+import LabelRutina from "../components/labelRutinas/labelRutina";
+import LabelMensajes from "../components/mensajes/labelMensajes";
 
 
 export default function UserPage() {
+  
+  const [showMensajes, setShowMensajes] = useState(false);
+
+  const router = useRouter();
+
   const handleUsuario = async () => {
-    alert("boton usuario")
+    //alert("boton usuario")
+    router.push("/datosUsuarios")
   }
 
   const handleRutinas = async () => {
-    alert("boton rutinas")
+    //alert("boton rutinas")
+    router.push("/resumenRutina")
   }
 
   const handlePagos = async () => {
-    alert("boton pagos")
+    //alert("boton pagos")
+    router.push("/pagos")
   }
 
-  const handleNoticias = async () => {
-    alert("boton usuario")
+  const handleMensajes = async () => {
+    alert("boton mensajes")
+    setShowMensajes(true)
   }
+
   return (
     <div className="flex flex-col min-h-screen">
       <div>
@@ -28,13 +43,16 @@ export default function UserPage() {
               alt="logo warrior" 
               width={300} 
               height={300} 
-              className="rounded-t-lg shadow-xl"
+              className="rounded-t-lg shadow-xl m-4"
               priority 
-              />
+              />   
+              <div className="flex items-center ml-auto mr-4">
+                <LogoutButton/>
+              </div>         
           </header>
       </div>
           <div>
-
+            <LabelRutina />
           </div>
      <div className="bg-gray-200 text-black p-2 mt-auto ">
       <footer className="flex justify-between">
@@ -78,7 +96,7 @@ export default function UserPage() {
               />
           </button>
           <button 
-            onClick={handleNoticias}
+            onClick={handleMensajes}
             className="bg-indigo-100 m-2 p-1 rounded-md"
             >
              <Image 
@@ -92,8 +110,21 @@ export default function UserPage() {
           </button>
         </footer>
      </div>
-        
-    </div>
+
+        {/* Modal para mostrar los mensajes */}
+      {showMensajes && (
+        <div className="modal modal-open">
+          <div className="modal-box">
+            <div className='flex justify-end'>
+              <button className='text-white btn btn-sm btn-circle btn-ghost absolute right-1 top-1' onClick={() => setShowMensajes(false)}>
+                X
+              </button>
+              <LabelMensajes />
+            </div>
+          </div> 
+        </div>
+      )}
+     </div>
 );
 
 }

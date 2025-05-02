@@ -43,18 +43,15 @@ export default function UserPage() {
               alt="logo warrior" 
               width={300} 
               height={300} 
-              className="rounded-t-lg shadow-xl m-4"
+              className="rounded-t shadow-xl m-1"
               priority 
-              />   
-              <div className="flex items-center ml-auto mr-4">
-                <LogoutButton/>
-              </div>         
+              />        
           </header>
       </div>
           <div>
             <LabelRutina />
           </div>
-     <div className="bg-gray-200 text-black p-2 mt-auto ">
+     <div className="bg-gray-200 text-black p-1 mt-auto rounded ">
       <footer className="flex justify-between">
           <button 
             onClick={handleUsuario}
@@ -108,6 +105,9 @@ export default function UserPage() {
               priority 
               />
           </button>
+            <div className="flex items-center ml-auto mr-4">
+              <LogoutButton/>
+            </div>    
         </footer>
      </div>
 

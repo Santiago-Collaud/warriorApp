@@ -1,9 +1,12 @@
-import { supabase } from '../../../../lib/supabaseClient';
+import { supabase } from '../../../../../lib/supabaseClient';
 
-export async function PUT(req: Request) {
+export async function POST(req: Request) {
   try {
-    const { id_cliente, nombre, apellido, mail, celular, id_grupo_sangre, id_factor_sanguineo, obs_salud, fecha_nacimiento, activo } = await req.json();
+    //console.log("LLEGÓ AL ROUTE updateDatosusuario"); 
+    const { id_cliente, nombre, apellido, mail, celular, id_grupo_sangre, id_factor_sanguineo, obs_salud, fecha_nacimiento } = await req.json();
 
+    //console.log("Datos recibidos:", { id_cliente, nombre, apellido, mail, celular, id_grupo_sangre, id_factor_sanguineo, obs_salud, fecha_nacimiento });
+    
     // Validar que se envíe el ID del cliente
     if (!id_cliente) {
       return new Response(
@@ -19,7 +22,7 @@ export async function PUT(req: Request) {
     });
 
     const { data, error } = await supabase
-      .from('usuario-cliente')
+      .from('clientes')
       .update({
         nombre,
         apellido,
@@ -29,9 +32,9 @@ export async function PUT(req: Request) {
         id_factor_sanguineo,
         obs_salud,
         fecha_nacimiento,
-        activo,
       })
-      .eq('id_cliente', id_cliente); // Especificar el cliente a actualizar según su ID
+      .eq('id_cliente', id_cliente)
+      .select('*'); ; // Especificar el cliente a actualizar según su ID
 
     if (error) {
       console.error('Error de Supabase:', error);
@@ -40,7 +43,7 @@ export async function PUT(req: Request) {
         { status: 500 }
       );
     }
-
+    
     return new Response(JSON.stringify({ cliente: data }), { status: 200 });
   } catch (err) {
     console.error('Error al actualizar el cliente', err);

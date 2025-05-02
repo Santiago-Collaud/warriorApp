@@ -31,5 +31,5 @@ const [usuarios, setUsuarios] = useState<Usuario[]>([]);
     fetchClientes();
   }, []);
 
-  return { usuarios, loading, error };
+  return { usuarios, loading, error, fetchClientes };
 };

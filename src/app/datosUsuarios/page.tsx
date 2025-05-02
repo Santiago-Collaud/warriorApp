@@ -1,22 +1,55 @@
 "use client";
 import { useUsuario } from "../datosUsuarios/hook/useUsuario"; // Importamos el hook
+import { Usuario } from "../../interface/usuario"; // Asegurate que sea la ruta correcta
 
+import { useState } from "react";
+import Image from "next/image";
 
-export default function HistorialRutinas() {
-  const { loading, error, usuarios } = useUsuario();
+import ModalEditarUsuario from "../components/editDatosUsuario/editDatosUsuario"; // Ruta donde guardamos el modal para editar los datos del usuario
+
+export default function DatosUsuario() {
+  const { loading, error, usuarios, fetchClientes } = useUsuario();
+  const [ showModalEditar , setShowModalEditar ] = useState(false);
+  const [usuarioSeleccionado, setUsuarioSeleccionado] = useState<Usuario | null>(null);
+
+  const handleEditar = (usuario: Usuario) => {
+    setUsuarioSeleccionado(usuario);
+    setShowModalEditar(true);
+    fetchClientes() // Llamamos a la función para actualizar los datos después de editar
+  }
 
   return (
-    <div className="text-white">
-      <h1>Datos de usuarios</h1>
+    <div className="text-white text-white p-4 w-full">
 
       {loading && <p>Cargando...</p>}
       {error && <p>Error: {error}</p>}
+ 
 
       {usuarios.map((usuario) => (
         <div
           key={usuario.id}
           className="bg-gray-200 text-black p-4 mt-4 rounded shadow"
         >
+          <div className="border flex grid grid-cols-2 gap-4 mb-4">
+            <div className="flex items-center justify-center">
+              datos personales
+            </div>
+            <div className="flex items-center justify-end ">
+              <button 
+                onClick={() => handleEditar(usuario)}
+                className="bg-indigo-100 m-2 p-1 rounded-md"
+                >
+                  <Image 
+                  src="/icons/edit.png" 
+                  alt="logo warrior" 
+                  width={20} 
+                  height={20} 
+                  className="rounded-t-lg shadow-xl"
+                  priority 
+                  />
+              </button> 
+            </div>
+          </div>
           <h2>
             <strong>Usuario:</strong> {usuario.username}
           </h2>
@@ -50,7 +83,25 @@ export default function HistorialRutinas() {
           </h2>
         </div>
       ))}
+
+      {/* Modal para meditar los datos de usuario */}
+      {showModalEditar && usuarioSeleccionado && (
+        <ModalEditarUsuario
+          usuario={usuarioSeleccionado}
+          onSave={(clienteActualizado) => {
+            fetchClientes();
+            console.log(clienteActualizado);
+            setShowModalEditar(false);
+            setUsuarioSeleccionado(null);
+          }}
+          onClose={() => {
+            setShowModalEditar(false);
+            setUsuarioSeleccionado(null);
+          }}
+        />
+      )}
     </div>
+     
   );
 }
 

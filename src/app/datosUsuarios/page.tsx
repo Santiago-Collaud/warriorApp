@@ -28,10 +28,10 @@ export default function DatosUsuario() {
       {usuarios.map((usuario) => (
         <div
           key={usuario.id}
-          className="bg-gray-200 text-black p-4 mt-4 rounded shadow"
+          className="bg-black text-white p-4 mt-4 rounded shadow mt-30 mb-60"
         >
-          <div className="border flex grid grid-cols-2 gap-4 mb-4">
-            <div className="flex items-center justify-center">
+          <div className="flex grid grid-cols-2 gap-4 mb-4 rounded bg-sky-300">
+            <div className="flex items-center justify-center font-bold text-black">
               datos personales
             </div>
             <div className="flex items-center justify-end ">
@@ -50,37 +50,41 @@ export default function DatosUsuario() {
               </button> 
             </div>
           </div>
-          <h2>
-            <strong>Usuario:</strong> {usuario.username}
-          </h2>
-          <h2>
-            <strong>Nombre:</strong> {usuario.clientes?.nombre}
-          </h2>
-          <h2>
-            <strong>Apellido:</strong> {usuario.clientes?.apellido}
-          </h2>
-          <h2>
-            <strong>Email:</strong> {usuario.clientes?.mail}
-          </h2>
-          <h2>
-            <strong>Teléfono:</strong> {usuario.clientes?.celular}
-          </h2>
-          <h2>
-            <strong>Fecha de Nacimiento:</strong>{" "}
-            {usuario.clientes?.fecha_nacimiento}
-          </h2>
-          <h2>
-            <strong>Grupo sanguíneo:</strong>{" "}
-            {usuario.clientes?.grupo_sanguineo?.grupo}
-          </h2>
-          <h2>
-            <strong>Factor sanguíneo:</strong> RH{" "}
-            {usuario.clientes?.factor_sanguineo?.factor}
-          </h2>
-          <h2>
-            <strong>Observaciones de salud:</strong>{" "}
-            {usuario.clientes?.obs_salud}
-          </h2>
+
+          <div className="border rounded p-4 shadow-lg shadow-red-400/80  ">
+            <h2 className="mb-1">
+              Usuario:<strong className="text-xl text-italic pb-2"> {usuario.username}</strong> 
+            </h2>
+            <h2>
+              <strong>Nombre:</strong> {usuario.clientes?.nombre}
+            </h2>
+            <h2>
+              <strong>Apellido:</strong> {usuario.clientes?.apellido}
+            </h2>
+            <h2>
+              <strong>Email:</strong> {usuario.clientes?.mail}
+            </h2>
+            <h2>
+              <strong>Teléfono:</strong> {usuario.clientes?.celular}
+            </h2>
+            <h2>
+              <strong>Fecha de Nacimiento:</strong>{" "}
+              {usuario.clientes?.fecha_nacimiento}
+            </h2>
+            <h2>
+              <strong>Grupo sanguíneo:</strong>{" "}
+              {usuario.clientes?.grupo_sanguineo?.grupo}
+            </h2>
+            <h2>
+              <strong>Factor sanguíneo:</strong> RH{" "}
+              {usuario.clientes?.factor_sanguineo?.factor}
+            </h2>
+            <h2>
+              <strong>Observaciones de salud:</strong>{" "}
+              {usuario.clientes?.obs_salud}
+            </h2>
+          </div>
+          
         </div>
       ))}
 

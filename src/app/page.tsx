@@ -167,11 +167,10 @@ const rememberMe = (checked: boolean) => {
   };
 
 
-
   return (
     <div>
       <div
-        className="min-h-screen flex items-center justify-center bg-gray-900 px-6"
+        className="min-h-screen flex items-center justify-center px-6"
         style={{
           backgroundImage: "url('/backGrounds/background.webp')",
           backgroundSize: "cover",
@@ -206,14 +205,15 @@ const rememberMe = (checked: boolean) => {
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUsername(e.target.value)}
           />
             <div className="mb-2 mt-1 flex items-center justify-end">
+            <label htmlFor="rememberMe" className="text-sm">Recordar usuario</label>
               <input
                 type="checkbox"
                 id="rememberMe"
                 checked={rememberChecked}
                 onChange={(e) => rememberMe(e.target.checked)}
-                className="mr-2"
+                className="ml-1 toggle"
               />
-              <label htmlFor="rememberMe" className="text-sm">Recordar usuario</label>
+              
             </div>
 
           <input
@@ -224,15 +224,16 @@ const rememberMe = (checked: boolean) => {
             onChange={(e) => setPassword(e.target.value)}
           />
           
-          <div className="mb-4 flex items-center">
+          <div className="mb-4 flex items-center justify-end">
+          <label htmlFor="togglePassword" className="text-sm">Mostrar contraseña</label>
             <input
               type="checkbox"
               id="togglePassword"
               checked={showPassword}
               onChange={() => setShowPassword(!showPassword)}
-              className="mr-1 toggle"
+              className="ml-1 toggle"
             />
-            <label htmlFor="togglePassword" className="text-sm">Mostrar contraseña</label>
+            
           </div>
 
           <button

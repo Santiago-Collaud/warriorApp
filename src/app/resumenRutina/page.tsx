@@ -35,7 +35,7 @@ export default function HistorialRutinas() {
 
   return (
     <div className="text-white p-4 w-full">
-      <h2 className="text-2xl font-bold mb-4 text-center">Historial de Rutinas</h2>
+      <h2 className="text-2xl font-bold mb-4 text-center text-black rounded bg-sky-300">Historial de Rutinas</h2>
 
       {historial.length === 0 ? (
         <p className="text-center">No hay rutinas registradas aún.</p>
@@ -46,7 +46,7 @@ export default function HistorialRutinas() {
             onChange={(value) => setFechaSeleccionada(value as Date)}
             tileClassName={tileClassName}
             locale="es-ES"
-            className="rounded-lg p-2 bg-gray-900 text-white"
+            
           />
 
           {/* 📄 Mostrar rutina del día */}

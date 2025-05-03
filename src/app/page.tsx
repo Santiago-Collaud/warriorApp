@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import Image from "next/image";
 import InstallButton from "./components/installButton/InstallButton";
 import { useRouter } from 'next/navigation';
@@ -33,6 +33,25 @@ export default function LoginPage() {
   
   // Define el estado is_verify a nivel superior (si es necesario cambiarlo)
   const [is_verify] = useState(true);
+
+  const [rememberChecked, setRememberChecked] = useState(false);
+
+useEffect(() => {
+  const storedUsername = localStorage.getItem("username");
+  if (storedUsername) {
+    setUsername(storedUsername);
+    setRememberChecked(true);
+  }
+}, []);
+
+const rememberMe = (checked: boolean) => {
+  setRememberChecked(checked);
+  if (checked) {
+    localStorage.setItem("username", username);
+  } else {
+    localStorage.removeItem("username");
+  }
+};
 
   const handleLogin = async () => {
     setLoading(true);
@@ -148,6 +167,7 @@ export default function LoginPage() {
   };
 
 
+
   return (
     <div>
       <div
@@ -181,40 +201,54 @@ export default function LoginPage() {
           <input
             type="text"
             placeholder="Usuario"
-            className="w-full p-3 mb-4 bg-gray-700 text-white rounded focus:outline-none"
+            className="w-full p-3 bg-gray-700 text-white rounded focus:outline-none"
             value={username}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUsername(e.target.value)}
           />
+            <div className="mb-2 mt-1 flex items-center justify-end">
+              <input
+                type="checkbox"
+                id="rememberMe"
+                checked={rememberChecked}
+                onChange={(e) => rememberMe(e.target.checked)}
+                className="mr-2"
+              />
+              <label htmlFor="rememberMe" className="text-sm">Recordar usuario</label>
+            </div>
 
           <input
              type={showPassword ? "text" : "password"}
             placeholder="Contraseña"
-            className="w-full p-3 mb-4 bg-gray-700 text-white rounded focus:outline-none"
+            className="w-full p-3 mb-2 bg-gray-700 text-white rounded focus:outline-none"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+          
           <div className="mb-4 flex items-center">
-          <input
-            type="checkbox"
-            id="togglePassword"
-            checked={showPassword}
-            onChange={() => setShowPassword(!showPassword)}
-            className="mr-2 toggle"
-          />
-          <label htmlFor="togglePassword" className="text-sm">Mostrar contraseña</label>
-        </div>
-
-          <div className="flex justify-end pb-2">
-            <button onClick={() => setModalNuevoUsuario(true)}>crear cuenta</button>
+            <input
+              type="checkbox"
+              id="togglePassword"
+              checked={showPassword}
+              onChange={() => setShowPassword(!showPassword)}
+              className="mr-1 toggle"
+            />
+            <label htmlFor="togglePassword" className="text-sm">Mostrar contraseña</label>
           </div>
 
           <button
             onClick={handleLogin}
             disabled={loading}
-            className="w-full bg-blue-500 text-white py-3 rounded hover:bg-blue-600 transition disabled:opacity-50"
-          >
+            className="w-full bg-sky-300 text-black font-bold py-3 pb-3 pt-4 rounded hover:bg-sky-100 transition disabled:opacity-50"
+          > 
             {loading ? "Cargando..." : "Ingresar"}
           </button>
+
+          <div className="flex justify-end pb-2 pt-2">
+            <button 
+              onClick={() => setModalNuevoUsuario(true)}
+              className="w-full btn btn-outline btn-secondary text-sm "
+              >crear cuenta</button>
+          </div>
         </div>
       </div>
 

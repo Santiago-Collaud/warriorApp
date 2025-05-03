@@ -32,7 +32,7 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased max-w-screen overflow-x-hidden`}>
-        <div className="w-full max-w-[420px] mx-auto px-4"> {/*<div className="w-full max-w-[420px] mx-auto px-4"></div>*/}
+        <div className="w-full max-w-[420px] mx-auto px-4 bg-black"> 
           {children}
         </div>
       </body>

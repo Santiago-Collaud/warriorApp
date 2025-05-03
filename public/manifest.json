@@ -1,6 +1,6 @@
 {
     "name": "Warrior App",
-    "short_name": "PWA",
+    "short_name": "WarriorAPP",
     "description": "Warrior Gym app",
     "start_url": "/",
     "display": "standalone",

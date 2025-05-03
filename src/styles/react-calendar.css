@@ -1,19 +1,20 @@
 /* Base */
 .react-calendar {
-    background-color: #1f2937; /* bg-gray-800 */
-    border: none;
+    background-color: #22232600; 
+    border: red 1px solid #22232600; /* bg-gray-800 */
     border-radius: 1rem;
     padding: 1rem;
     color: white;
-    width: 70%;
-    max-width: 350px;
+    width: 90%;
+    max-width: 300px;
+    box-shadow: 0 4px 20px rgb(75, 110, 75);
   }
   
   /* Header del mes */
   .react-calendar__navigation {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 1rem;
+    margin-bottom: 0.1rem;
   }
   
   .react-calendar__navigation button {

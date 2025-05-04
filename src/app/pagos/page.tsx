@@ -17,19 +17,19 @@ const LabelDatosUsuario = () => {
           <table className="min-w-full w-full bg-white text-black rounded shadow text-sm">
             <thead className="bg-gray-200 text-left">
               <tr>
-                <th className="px-4 py-2 whitespace-nowrap">Mes</th>
-                <th className="px-4 py-2 whitespace-nowrap">Año</th>
-                <th className="px-4 py-2 whitespace-nowrap">Monto</th>
-                <th className="px-4 py-2 whitespace-nowrap">Fecha de pago</th>
+                <th className="text-lg sm:text-base sm:table-cell text-center">Mes</th>
+                <th className="text-lg sm:text-base sm:table-cell text-center">Año</th>
+                <th className="text-lg sm:text-base sm:table-cell text-center">Monto</th>
+                <th className="text-lg sm:text-base sm:table-cell text-center">Fecha pago</th>
               </tr>
             </thead>
             <tbody>
               {pagos.map((pago, index) => (
                 <tr key={index} className="border-t border-gray-300">
-                  <td className="px-4 py-2 whitespace-nowrap">{pago.id_mes}</td>
-                  <td className="px-4 py-2 whitespace-nowrap">{pago.year}</td>
-                  <td className="px-4 py-2 whitespace-nowrap">${pago.monto.toFixed(2)}</td>
-                  <td className="px-4 py-2 whitespace-nowrap">{new Date(pago.created_at).toLocaleDateString()}</td>
+                  <td className="text-sm sm:text-base sm:table-cell text-center">{pago.id_mes}</td>
+                  <td className="text-sm sm:text-base sm:table-cell text-center">{pago.year}</td>
+                  <td className="text-sm sm:text-base sm:table-cell text-center">${pago.monto.toFixed(2)}</td>
+                  <td className="text-sm sm:text-base sm:table-cell text-center">{new Date(pago.created_at).toLocaleDateString()}</td>
                 </tr>
               ))}
             </tbody>

@@ -30,7 +30,7 @@ export default function UserPage() {
   }
 
   const handleMensajes = async () => {
-    alert("boton mensajes")
+    //alert("boton mensajes")
     setShowMensajes(true)
   }
 

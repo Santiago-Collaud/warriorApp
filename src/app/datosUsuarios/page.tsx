@@ -1,9 +1,9 @@
 "use client";
 import { useUsuario } from "../datosUsuarios/hook/useUsuario"; // Importamos el hook
 import { Usuario } from "../../interface/usuario"; // Asegurate que sea la ruta correcta
-
 import { useState } from "react";
-import Image from "next/image";
+import Image from "next/image"
+import { useRouter } from 'next/navigation';
 
 import ModalEditarUsuario from "../components/editDatosUsuario/editDatosUsuario"; // Ruta donde guardamos el modal para editar los datos del usuario
 
@@ -12,10 +12,24 @@ export default function DatosUsuario() {
   const [ showModalEditar , setShowModalEditar ] = useState(false);
   const [usuarioSeleccionado, setUsuarioSeleccionado] = useState<Usuario | null>(null);
 
+  const router = useRouter();
+
   const handleEditar = (usuario: Usuario) => {
     setUsuarioSeleccionado(usuario);
     setShowModalEditar(true);
     fetchClientes() // Llamamos a la función para actualizar los datos después de editar
+  }
+  
+  const handleAvisoLegal = () => {
+    router.push("/legales/aviso_legal")
+  }
+
+  const handlePoliticas = () => {
+    router.push("/legales/politicas_privacidad")
+  }
+
+  const handleTeam = () => {
+    router.push("/legales/team")
   }
 
   return (
@@ -28,63 +42,97 @@ export default function DatosUsuario() {
       {usuarios.map((usuario) => (
         <div
           key={usuario.id}
-          className="bg-black text-white p-4 mt-4 rounded shadow mt-30 mb-60"
+          className="bg-black text-white p-4 mt-4 rounded shadow mt-10 mb-20"
         >
-          <div className="flex grid grid-cols-2 gap-4 mb-4 rounded bg-sky-300">
-            <div className="flex items-center justify-center font-bold text-black">
-              datos personales
-            </div>
-            <div className="flex items-center justify-end ">
-              <button 
-                onClick={() => handleEditar(usuario)}
-                className="bg-indigo-100 m-2 p-1 rounded-md"
-                >
-                  <Image 
-                  src="/icons/edit.png" 
+          <div className=" rounded p-4 shadow-lg shadow-blue-400/80 bg-gradient-to-t from-blue-300 to-blue-950 ">
+          
+            <div className="grid col-2 flex justify-center items-center">
+              <div className="grid col-1 flex justify-center items-center mb-4 ">
+                <Image 
+                  src="/icons/profile_user.png" 
                   alt="logo warrior" 
-                  width={20} 
-                  height={20} 
-                  className="rounded-t-lg shadow-xl"
+                  width={100} 
+                  height={100} 
+                  className="border bg-white rounded-full object-cover"
                   priority 
                   />
-              </button> 
+              </div>
+              
+              <div>
+                <h2 className="mb-1 flex justify-center items-center">
+                  <strong className="text-3xl text-italic pb-2"> {usuario.username}</strong> 
+                </h2>
+              </div>
+            </div>
+
+            <div className=" rounded-lg p-4 bg-stone-800 ">  
+              <div className="grid grid-cols-2 gap-2">
+                <div className="col-start-1 col-end-3  border-t border-gray-300 pt-4">
+                  <h2 className="text-2xl">
+                    <strong> {usuario.clientes?.nombre} {usuario.clientes?.apellido}</strong>
+                  </h2>
+                </div>
+
+                <div className="col-span-2 col-end-7">
+                  <button 
+                      onClick={() => handleEditar(usuario)}
+                      className="bg-indigo-100 mb-2 p-1 rounded-md"
+                      >
+                        <Image 
+                        src="/icons/edit.png" 
+                        alt="logo warrior" 
+                        width={20} 
+                        height={20} 
+                        className="rounded-t-lg shadow-xl"
+                        priority 
+                        />
+                    </button> 
+                </div>
+              </div>
+              <div className="mt-4 border-t border-gray-300 pt-4">
+                <h2 className="mb-2">
+                  <strong>Email:</strong> {usuario.clientes?.mail}
+                </h2>
+                <h2 className="mb-2">
+                  <strong>Teléfono:</strong> {usuario.clientes?.celular}
+                </h2>
+                <h2>
+                  <strong>Fecha de Nacimiento:</strong>
+                  {usuario.clientes?.fecha_nacimiento}
+                </h2>
+                <h2>
+                  <strong>Grupo sanguíneo:</strong>
+                  {usuario.clientes?.grupo_sanguineo?.grupo}
+                </h2>
+                <h2>
+                  <strong>Factor sanguíneo:</strong> RH{" "}
+                  {usuario.clientes?.factor_sanguineo?.factor}
+                </h2>
+                <h2>
+                  <strong>Observaciones de salud:</strong>{" "}
+                  {usuario.clientes?.obs_salud}
+                </h2>
+              </div>
             </div>
           </div>
-
-          <div className="border rounded p-4 shadow-lg shadow-red-400/80  ">
-            <h2 className="mb-1">
-              Usuario:<strong className="text-xl text-italic pb-2"> {usuario.username}</strong> 
-            </h2>
-            <h2>
-              <strong>Nombre:</strong> {usuario.clientes?.nombre}
-            </h2>
-            <h2>
-              <strong>Apellido:</strong> {usuario.clientes?.apellido}
-            </h2>
-            <h2>
-              <strong>Email:</strong> {usuario.clientes?.mail}
-            </h2>
-            <h2>
-              <strong>Teléfono:</strong> {usuario.clientes?.celular}
-            </h2>
-            <h2>
-              <strong>Fecha de Nacimiento:</strong>{" "}
-              {usuario.clientes?.fecha_nacimiento}
-            </h2>
-            <h2>
-              <strong>Grupo sanguíneo:</strong>{" "}
-              {usuario.clientes?.grupo_sanguineo?.grupo}
-            </h2>
-            <h2>
-              <strong>Factor sanguíneo:</strong> RH{" "}
-              {usuario.clientes?.factor_sanguineo?.factor}
-            </h2>
-            <h2>
-              <strong>Observaciones de salud:</strong>{" "}
-              {usuario.clientes?.obs_salud}
-            </h2>
-          </div>
-          
+          <br />
+          <footer className="border bg-grey-300 rounded-lg p-4 bg-gradient-to-t from-neutral-300 to-neutral-600 flex justify-center items-center">
+            <button onClick={handleAvisoLegal}>
+              <div className="mr-2">
+                Legales
+              </div>
+            </button>  
+            <button onClick={handlePoliticas}>
+              <div className="mr-2">
+                Privacidad
+              </div>
+            </button>           
+            <button onClick={handleTeam}>
+              <div className="mr-2">
+                Team
+              </div>
+            </button>                
+          </footer>
         </div>
       ))}
 

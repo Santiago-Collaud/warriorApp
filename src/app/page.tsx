@@ -32,7 +32,7 @@ export default function LoginPage() {
   const [toggleAceptado, setToggleAceptado] = useState(false);
   
   // Define el estado is_verify a nivel superior (si es necesario cambiarlo)
-  const [is_verify] = useState(true);
+  const [is_verify] = useState(false); // false para solicitar nuevo usuario, se cambia al momento de aceptar el admin
 
   const [rememberChecked, setRememberChecked] = useState(false);
 

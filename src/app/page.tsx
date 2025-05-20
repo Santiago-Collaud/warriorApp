@@ -204,7 +204,7 @@ const rememberMe = (checked: boolean) => {
             value={username}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUsername(e.target.value)}
           />
-            <div className="mb-2 mt-1 flex items-center justify-end">
+            <div className="mb-2 mt-1 flex items-center justify-end text-white">
             <label htmlFor="rememberMe" className="text-sm">Recordar usuario</label>
               <input
                 type="checkbox"
@@ -224,7 +224,7 @@ const rememberMe = (checked: boolean) => {
             onChange={(e) => setPassword(e.target.value)}
           />
           
-          <div className="mb-4 flex items-center justify-end">
+          <div className="mb-4 flex items-center justify-end text-white">
           <label htmlFor="togglePassword" className="text-sm">Mostrar contraseña</label>
             <input
               type="checkbox"

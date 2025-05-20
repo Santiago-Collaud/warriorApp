@@ -48,7 +48,7 @@ export default function LabelRutina() {
           const dia_rutina = rutinaItem.dias.length;
 
           return (
-            <div key={index} className="mb-6 p-4 border border-gray-700 rounded">
+            <div key={index} className="mb-6 p-4 border border-gray-700 rounded bg-gray-950">
               <h2 className="text-xl font-semibold mb-4">{rutinaItem.titulo}</h2>
 
               {/* Select para elegir el día */}

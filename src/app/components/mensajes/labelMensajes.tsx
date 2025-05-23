@@ -2,9 +2,11 @@
 
 import { useMensajeGet } from "@/app/components/mensajes/hook/useMensajeGet";
 import { getMensajes as Mensaje } from "@/interface/mensajes/getMensajes";
+import MensajeInput from "../mensajes/inputMensajes";
 
 const LabelMensajes = () => {
   const { loading, error, getMensajes } = useMensajeGet();
+  const usuarioId = Number(localStorage.getItem("usuarioId"));
 
   return (
     <div className="text-white p-4">
@@ -53,6 +55,12 @@ const LabelMensajes = () => {
             ))}
           </div>
         )}
+      </div>
+      <div className="border border-gray-300 bg-zinc-500 rounded-lg p-4 mb-4">
+        <MensajeInput
+          id_emisor_cliente={usuarioId}
+          //onMensajeEnviado={fetchMensajes} // opcional, si querés refrescar los mensajes
+        />
       </div>
     </div>
   );

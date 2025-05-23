@@ -1,24 +1,24 @@
 import { useEffect, useState } from "react";
-import { Mensajes } from "../../../../interface/mensajes"; 
+import { getMensajes } from "../../../../interface/mensajes/getMensajes"; 
 
-export const useMensaje = () => {
-    const [mensajes, setMensajes] = useState<Mensajes[]>([]); 
+export const useMensajeGet = () => {
+    const [getMensajes, setGetMensajes] = useState<getMensajes[]>([]); 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     
     const fetchMensajes = async () => {
-        const id_usuario = localStorage.getItem("id_usuario") || "";
+        const id_cliente = localStorage.getItem("id_cliente") || "";
         
-        console.log("id_usuario front", id_usuario);
+        //console.log("id_cliente front", id_cliente);
 
         try {
-        const response = await fetch(`/api/mensajes/getMensajes?id_usuario=${id_usuario}`);
+        const response = await fetch(`/api/mensajes/getMensajes?id_cliente=${id_cliente}`);
         const result = await response.json();
 
         console.log("result", result);
 
         if (response.ok) {
-            setMensajes(result.mensajes);
+            setGetMensajes(result.mensajes);
         } else {
             setError(result.error || "Error al obtener los mensajes");
         }
@@ -36,5 +36,5 @@ export const useMensaje = () => {
         fetchMensajes();
     }, []);
     
-    return { mensajes, loading, error };
+    return { getMensajes, loading, error };
 }

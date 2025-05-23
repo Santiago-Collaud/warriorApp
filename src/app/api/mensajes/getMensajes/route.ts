@@ -2,25 +2,26 @@ import { supabase } from '../../../../../lib/supabaseClient';
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
-  const id_usuario = searchParams.get("id_usuario");
+  const id_cliente = searchParams.get("id_cliente");
 
-  //console.log("id_usuario back", id_usuario);
+  console.log("id_cliente back", id_cliente);
 
-  if (!id_usuario) {
+  if (!id_cliente) {
     return new Response(
-      JSON.stringify({ error: "Falta el id_usuario" }),
+      JSON.stringify({ error: "Falta el id_cliente" }),
       { status: 400 }
     );
   }
 
-  const { data, error } = await supabase
+    const { data, error } = await supabase
   .from("mensajes")
   .select(`
     *,
-    emisor_admin: id_emisor_admin (nombre),
-    receptor_admin: id_receptor_admin (nombre)
+    id_receptor_admin (
+      nombre
+    )
   `)
-  .or(`id_emisor_cliente.eq.${id_usuario},id_receptor_cliente.eq.${id_usuario}`)
+  .or(`id_emisor_cliente.eq.${id_cliente}`)
   .order("created_at", { ascending: true });
 
   if (error) {
@@ -31,7 +32,7 @@ export async function GET(req: Request) {
     );
   }
 
-  console.log("Mensajes obtenidos:", data);
+  //console.log("Mensajes obtenidos:", data);
 
   return new Response(
     JSON.stringify({ mensajes: data }),

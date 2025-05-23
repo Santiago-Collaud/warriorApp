@@ -34,7 +34,7 @@ export default function HistorialRutinas() {
   const rutinaDelDia = fechaSeleccionada ? buscarRutinaPorFecha(fechaSeleccionada) : null;
 
   return (
-    <div className="text-white p-4 w-full">
+    <div className="text-white p-4 w-full bg-gray-950">
       <h2 className="text-2xl font-bold mb-4 text-center text-black rounded bg-sky-300">Historial de Rutinas</h2>
 
       {historial.length === 0 ? (

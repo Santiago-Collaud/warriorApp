@@ -32,83 +32,103 @@ export default function UserPage() {
   const handleMensajes = async () => {
     //alert("boton mensajes")
     setShowMensajes(true)
+    //router.push("/mensajes")
   }
 
   return (
     <div className="flex flex-col min-h-screen">
       <div>
-        <header className="bg-gray-200 p-2 flex justify-center shadow-md rounded-md">
+        <header className="bg-slate-900 p-2 flex justify-center shadow-md rounded-md">
             <Image 
               src="/icons/warrior_Title-PNG.png" 
               alt="logo warrior" 
               width={300} 
               height={300} 
-              className="rounded-t shadow-xl m-1"
+              className="rounded-t shadow-xl m-1 opacity-75"
               priority 
-              />        
+              />
+              <div className="ml-3 mr-auto mt-3">
+                <LogoutButton />  
+              </div>     
+                 
           </header>
+          
       </div>
           <div>
             <LabelRutina />
           </div>
-     <div className="bg-gray-200 text-black p-1 mt-auto rounded ">
-      <footer className="flex justify-between">
+
+     <div className="bg-slate-900 text-black p-1 mt-auto rounded ">
+      <footer className="flex justify-between opacity-75">
+
+        <div className="flex flex-col items-center">
           <button 
             onClick={handleUsuario}
-            className="bg-indigo-100 m-2 p-1 rounded-md"
+            className="bg-slate-700 mt-2 p-1 rounded-md"
             >
               <Image 
               src="/icons/usuario.png" 
               alt="logo warrior" 
-              width={50} 
-              height={50} 
+              width={35} 
+              height={35} 
               className="rounded-t-lg shadow-xl"
               priority 
               />
           </button>
+          <h3 className="text-white">usuario</h3>
+        </div>
+          
+        <div className="flex flex-col items-center">
           <button 
             onClick={handleRutinas}
-            className="bg-indigo-100 m-2 p-1 rounded-md"
+            className="bg-slate-700 mt-2 p-1 rounded-md"
             >
               <Image 
               src="/icons/cronometro.png" 
               alt="logo warrior" 
-              width={50} 
-              height={50} 
+              width={35} 
+              height={35} 
               className="rounded-t-lg shadow-xl"
               priority 
               />
           </button>
+          <h3 className="text-white">Registro</h3>
+        </div>
+          
+        <div className="flex flex-col items-center">
           <button 
             onClick={handlePagos}
-            className="bg-indigo-100 m-2 p-1 rounded-md"
+            className="bg-slate-700 mt-2 p-1 rounded-md"
             >
               <Image 
               src="/icons/metodo-de-pago.png" 
               alt="logo warrior" 
-              width={50} 
-              height={50} 
+              width={35} 
+              height={35} 
               className="rounded-t-lg shadow-xl"
               priority 
               />
           </button>
+          <h3 className="text-white">Pagos</h3>
+        </div>
+          
+        <div className="flex flex-col items-center">
           <button 
             onClick={handleMensajes}
-            className="bg-indigo-100 m-2 p-1 rounded-md"
+            className="bg-slate-700 mt-2 p-1 rounded-md"
             >
              <Image 
               src="/icons/noticias.png" 
               alt="logo warrior" 
-              width={50} 
-              height={50} 
+              width={35} 
+              height={35} 
               className="rounded-t-lg shadow-xl"
               priority 
               />
           </button>
-            <div className="flex items-center ml-auto mr-4">
-              <LogoutButton/>
-            </div>    
-        </footer>
+          <h3 className="text-white">Mensajes</h3>
+        </div>         
+      </footer>
      </div>
 
         {/* Modal para mostrar los mensajes */}
@@ -116,11 +136,13 @@ export default function UserPage() {
         <div className="modal modal-open">
           <div className="modal-box">
             <div className='flex justify-end'>
-              <button className='text-white btn btn-sm btn-circle btn-ghost absolute right-1 top-1' onClick={() => setShowMensajes(false)}>
+              <button 
+                className='text-white btn btn-sm btn-circle btn-ghost absolute right-1 top-1' 
+                onClick={() => setShowMensajes(false)}>
                 X
               </button>
-              <LabelMensajes />
             </div>
+            <LabelMensajes />
           </div> 
         </div>
       )}

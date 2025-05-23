@@ -22,9 +22,9 @@ const LogoutButton = () => {
             <Image 
              src="/icons/logout.png" 
              alt="logo warrior" 
-             width={50} 
-             height={50} 
-             className="rounded-t-lg"
+             width={35} 
+             height={35} 
+             className=""
              priority 
              />
         </button>

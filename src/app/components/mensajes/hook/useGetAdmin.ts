@@ -14,7 +14,7 @@ export const useGetAdmins = () => {
 
         if (!res.ok) throw new Error(result.error || "Error al obtener admins");
 
-        console.log("Administradores obtenidos:", result.admins);
+        //console.log("Administradores obtenidos:", result.admins);
 
         setAdmins(result.admins);
       } catch (err) {

@@ -4,15 +4,17 @@ import { useMensajeGet } from "@/app/components/mensajes/hook/useMensajeGet";
 import { getMensajes as Mensaje } from "@/interface/mensajes/getMensajes";
 import MensajeInput from "../mensajes/inputMensajes";
 
+
 const LabelMensajes = () => {
-  const { loading, error, getMensajes } = useMensajeGet();
-  const usuarioId = Number(localStorage.getItem("usuarioId"));
+  const { loading, error, getMensajes, fetchMensajes } = useMensajeGet();
+  const id_cliente = Number(localStorage.getItem("id_cliente"));
+
 
   return (
-    <div className="text-white p-4">
+    <div className="p-4">
       <h1 className="text-xl font-bold mb-4">Mensajes</h1>
 
-      <div className="overflow-y-auto h-screen">
+      <div className="overflow-y-auto max-h-[calc(100vh-200px)]">
         {loading && <p>Cargando mensajes...</p>}
         {error && <p className="text-red-500">{error}</p>}
         {!loading && !error && getMensajes.length === 0 && (
@@ -20,13 +22,13 @@ const LabelMensajes = () => {
         )}
 
         {!loading && !error && getMensajes.length > 0 && (
-          <div className="border border-gray-300 bg-zinc-500 rounded-lg p-4 mb-4">
+          <div className="border border-gray-300 dark:bg-gray-600 rounded-lg p-4 mb-4">
             {getMensajes.map((msg: Mensaje) => (
-              <div key={msg.id} className="p-2 mb-6">
+              <div key={msg.id} className="">
                 
                 {/* MENSAJE CLIENTE */}
                 {msg.contenido?.trim() && (
-                  <div className="chat chat-end mb-2">
+                  <div className="chat chat-end">
                     <div className="chat-bubble bg-zinc-900 text-white">
                       <strong>Yo</strong>
                       <div className="text-gray-300">{msg.contenido}</div>
@@ -56,12 +58,13 @@ const LabelMensajes = () => {
           </div>
         )}
       </div>
-      <div className="border border-gray-300 bg-zinc-500 rounded-lg p-4 mb-4">
+      <div className="mt-4">
         <MensajeInput
-          id_emisor_cliente={usuarioId}
-          //onMensajeEnviado={fetchMensajes} // opcional, si querés refrescar los mensajes
+          id_emisor_cliente={id_cliente}
+          onMensajeEnviado={() => fetchMensajes(id_cliente)} // opcional, si querés refrescar los mensajes
         />
       </div>
+        
     </div>
   );
 };

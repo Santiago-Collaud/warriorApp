@@ -31,7 +31,7 @@ export async function POST(req: Request) {
       );
     }
 
-    return new Response(JSON.stringify({ pago: data }), { status: 200 });
+    return new Response(JSON.stringify({ mensaje: data }), { status: 200 });
   } catch (err) {
     console.error('Error al registrar el pago', err);
     return new Response(

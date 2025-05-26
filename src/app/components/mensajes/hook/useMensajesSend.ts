@@ -21,12 +21,18 @@ export const useMensajeSend = () => {
 
       const result = await response.json();
 
+      if(response.ok) {
+        //alert("Mensaje enviado correctamente");
+       //console.log("Mensaje enviado correctamente:", result);
+       return true;
+      }
+
       if (!response.ok) {
         setError(result.error || "Error al enviar el mensaje");
         return null;
       }
 
-      return result.pago; // o result.mensaje según el backend
+      return result.mensaje; // o result.mensaje según el backend
     } catch (err) {
       console.error("Error al enviar mensaje", err);
       setError("Error de red o servidor");

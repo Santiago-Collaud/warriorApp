@@ -26,13 +26,15 @@ export default function MensajeInput({ id_emisor_cliente, onMensajeEnviado }: Pr
     });
 
     if (resultado) {
+      
+      alert("Mensaje enviado con éxito");
       setContenido(""); // limpia el mensaje
       onMensajeEnviado?.(); // refresca los mensajes si se pasó
     }
   };
 
   return (
-    <div className="p-4 bg-white dark:bg-gray-800 rounded shadow mt-4">
+    <div className="p-4 bg-white dark:bg-gray-600 rounded shadow  border border-gray-300">
       <h2 className="text-lg font-bold mb-2">Enviar mensaje</h2>
 
       {loadingAdmins && <p>Cargando administradores...</p>}
@@ -41,7 +43,7 @@ export default function MensajeInput({ id_emisor_cliente, onMensajeEnviado }: Pr
       <select
         value={id_receptor_admin || ""}
         onChange={(e) => setIdReceptorAdmin(Number(e.target.value))}
-        className="w-full mb-2 p-2 border rounded"
+        className="w-full mb-2 p-2 border rounded darck:bg-gray-700 dark:text-white bg-gray-700 text-gray-800"
       >
         <option value="">Seleccionar administrador</option>
         {admins.map((admin) => (

@@ -1,17 +1,12 @@
 "use client";
-import { useState } from "react";
 import Image from "next/image";
 import { useRouter } from 'next/navigation';
 
 import LogoutButton from "../components/logOutButton/logoutButton";
 import LabelRutina from "../components/labelRutinas/labelRutina";
-import LabelMensajes from "../components/mensajes/labelMensajes";
 
 
 export default function UserPage() {
-  
-  const [showMensajes, setShowMensajes] = useState(false);
-
   const router = useRouter();
 
   const handleUsuario = async () => {
@@ -29,11 +24,11 @@ export default function UserPage() {
     router.push("/pagos")
   }
 
-  const handleMensajes = async () => {
-    //alert("boton mensajes")
-    setShowMensajes(true)
-    //router.push("/mensajes")
+  const handleNovedades = async () => {
+    //alert("boton novedades")
+    router.push("/novedades")
   }
+  
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -110,15 +105,15 @@ export default function UserPage() {
               />
           </button>
           <h3 className="text-white">Pagos</h3>
-        </div>
-          
+        </div>    
+
         <div className="flex flex-col items-center">
           <button 
-            onClick={handleMensajes}
+            onClick={handleNovedades}
             className="bg-slate-700 mt-2 p-1 rounded-md"
             >
-             <Image 
-              src="/icons/noticias.png" 
+              <Image 
+              src="/icons/metodo-de-pago.png" 
               alt="logo warrior" 
               width={35} 
               height={35} 
@@ -126,26 +121,10 @@ export default function UserPage() {
               priority 
               />
           </button>
-          <h3 className="text-white">Mensajes</h3>
-        </div>         
+          <h3 className="text-white">Novedades</h3>
+        </div>    
       </footer>
-     </div>
-
-        {/* Modal para mostrar los mensajes */}
-      {showMensajes && (
-        <div className="modal modal-open">
-          <div className="modal-box">
-            <div className='flex justify-end'>
-              <button 
-                className='text-white btn btn-sm btn-circle btn-ghost absolute right-1 top-1' 
-                onClick={() => setShowMensajes(false)}>
-                X
-              </button>
-            </div>
-            <LabelMensajes />
-          </div> 
-        </div>
-      )}
+     </div>   
      </div>
 );
 

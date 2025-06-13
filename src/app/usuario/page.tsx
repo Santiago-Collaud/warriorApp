@@ -1,17 +1,12 @@
 "use client";
-import { useState } from "react";
 import Image from "next/image";
 import { useRouter } from 'next/navigation';
 
 import LogoutButton from "../components/logOutButton/logoutButton";
-import LabelRutina from "../components/labelRutinas/labelRutina";
-import LabelMensajes from "../components/mensajes/labelMensajes";
+import LabelNovedades from "../novedades/page";
 
 
 export default function UserPage() {
-  
-  const [showMensajes, setShowMensajes] = useState(false);
-
   const router = useRouter();
 
   const handleUsuario = async () => {
@@ -21,6 +16,11 @@ export default function UserPage() {
 
   const handleRutinas = async () => {
     //alert("boton rutinas")
+    router.push("/rutina")
+  }
+
+  const handleResumen = async () => {
+    //alert("boton rutinas")
     router.push("/resumenRutina")
   }
 
@@ -29,11 +29,11 @@ export default function UserPage() {
     router.push("/pagos")
   }
 
-  const handleMensajes = async () => {
-    //alert("boton mensajes")
-    setShowMensajes(true)
-    //router.push("/mensajes")
+  const handleNovedades = async () => {
+    //alert("boton novedades")
+    router.push("/novedades")
   }
+  
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -47,15 +47,13 @@ export default function UserPage() {
               className="rounded-t shadow-xl m-1 opacity-75"
               priority 
               />
-              <div className="ml-3 mr-auto mt-3">
-                <LogoutButton />  
-              </div>     
+                  
                  
           </header>
           
       </div>
           <div>
-            <LabelRutina />
+            <LabelNovedades />
           </div>
 
      <div className="bg-slate-900 text-black p-1 mt-auto rounded ">
@@ -75,7 +73,7 @@ export default function UserPage() {
               priority 
               />
           </button>
-          <h3 className="text-white">usuario</h3>
+          <h4 className="text-white text-sm">Usuario</h4>
         </div>
           
         <div className="flex flex-col items-center">
@@ -84,7 +82,7 @@ export default function UserPage() {
             className="bg-slate-700 mt-2 p-1 rounded-md"
             >
               <Image 
-              src="/icons/cronometro.png" 
+              src="/icons/rutina.png" 
               alt="logo warrior" 
               width={35} 
               height={35} 
@@ -92,7 +90,24 @@ export default function UserPage() {
               priority 
               />
           </button>
-          <h3 className="text-white">Registro</h3>
+          <h3 className="text-white text-sm">Rutina</h3>
+        </div>
+
+        <div className="flex flex-col items-center">
+          <button 
+            onClick={handleResumen}
+            className="bg-slate-700 mt-2 p-1 rounded-md"
+            >
+              <Image 
+              src="/icons/registo.png" 
+              alt="logo warrior" 
+              width={35} 
+              height={35} 
+              className="rounded-t-lg shadow-xl"
+              priority 
+              />
+          </button>
+          <h3 className="text-white text-sm">Registro</h3>
         </div>
           
         <div className="flex flex-col items-center">
@@ -101,7 +116,7 @@ export default function UserPage() {
             className="bg-slate-700 mt-2 p-1 rounded-md"
             >
               <Image 
-              src="/icons/metodo-de-pago.png" 
+              src="/icons/pagos.png" 
               alt="logo warrior" 
               width={35} 
               height={35} 
@@ -109,16 +124,16 @@ export default function UserPage() {
               priority 
               />
           </button>
-          <h3 className="text-white">Pagos</h3>
-        </div>
-          
+          <h3 className="text-white text-sm">Pagos</h3>
+        </div>    
+
         <div className="flex flex-col items-center">
           <button 
-            onClick={handleMensajes}
+            onClick={handleNovedades}
             className="bg-slate-700 mt-2 p-1 rounded-md"
             >
-             <Image 
-              src="/icons/noticias.png" 
+              <Image 
+              src="/icons/novedades.png" 
               alt="logo warrior" 
               width={35} 
               height={35} 
@@ -126,27 +141,14 @@ export default function UserPage() {
               priority 
               />
           </button>
-          <h3 className="text-white">Mensajes</h3>
-        </div>         
-      </footer>
-     </div>
+          <h3 className="text-white text-sm">Novedades</h3>
+        </div> 
 
-        {/* Modal para mostrar los mensajes */}
-      {showMensajes && (
-        <div className="modal modal-open">
-          <div className="modal-box">
-            <div className='flex justify-end'>
-              <button 
-                className='text-white btn btn-sm btn-circle btn-ghost absolute right-1 top-1' 
-                onClick={() => setShowMensajes(false)}>
-                X
-              </button>
-            </div>
-            <LabelMensajes />
-          </div> 
+        <div >
+          <LogoutButton />
         </div>
-      )}
-     </div>
+      </footer>
+    </div>   
+  </div>
 );
-
 }

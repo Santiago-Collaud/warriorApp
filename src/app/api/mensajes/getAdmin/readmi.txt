@@ -1,3 +1,0 @@
-esta ruta es para seleccionar el admin que va a ser el receptor de los mensajes
-en un futuro tiene que cambiar o agregar la forma de soliciar clientes
-la tabla no esta diseñada del modo correcto

@@ -17,17 +17,20 @@ const LogoutButton = () => {
     }
   
   return (
-    <div>
-        <button onClick={handleLogout}>
+    <div className="flex flex-col items-center">
+        <button 
+          onClick={handleLogout}
+          className="bg-slate-700 mt-2 p-1 rounded-md">
             <Image 
              src="/icons/logout.png" 
              alt="logo warrior" 
              width={35} 
              height={35} 
-             className=""
+             className="rounded-t-lg shadow-xl"
              priority 
              />
         </button>
+        <h3 className="text-white text-sm">Salir</h3>
     </div>
   );
 };

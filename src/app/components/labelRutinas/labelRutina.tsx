@@ -33,6 +33,9 @@ export default function LabelRutina() {
     // Redirigir a la página de ejercicio
     router.push("/ejercicio");
   };
+  const handleResumen = () => {
+    router.push("/resumenRutina");
+  }
 
   return (
     <div className="text-white p-4">
@@ -100,15 +103,27 @@ export default function LabelRutina() {
                   </p>
                 )}
               </div>
-              <div className="flex jusify-end mb-4">
-                <button
-                  className="btn btn-soft btn-secondary"
-                  onClick={() => {
-                    handleComenzar(rutinaItem);
-                  }}
-                >
-                  Comenzar
-                </button>
+              <div className="flex grid grid-cols-2 gap-4">
+                  <div className="flex jusify-end mb-4">
+                  <button
+                    className="btn btn-soft btn-secondary"
+                    onClick={() => {
+                      handleComenzar(rutinaItem);
+                    }}
+                  >
+                    Comenzar
+                  </button>
+                </div>
+                <div className="flex jusify-end mb-4">
+                  <button
+                    className="btn btn-soft btn-secondary"
+                    onClick={
+                      handleResumen
+                    }
+                  >
+                    Resumen
+                  </button>
+                </div>
               </div>
               
             </div>

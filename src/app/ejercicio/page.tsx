@@ -85,6 +85,7 @@ export default function EjercicioPage() {
           Finalizar rutina
         </button>
       </div>
+      
     </div>
   );
 }

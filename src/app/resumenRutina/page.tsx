@@ -4,6 +4,7 @@ import { useResumenRutina } from "./hook/useResumenRutina";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css"; // ¡Importante!
 import "../../../src/styles/react-calendar.css"; // Estilos personalizados para el calendario
+import Footer from "../components/footer/footer";
 
 type TileClassNameParams = {
   date: Date;
@@ -34,7 +35,7 @@ export default function HistorialRutinas() {
   const rutinaDelDia = fechaSeleccionada ? buscarRutinaPorFecha(fechaSeleccionada) : null;
 
   return (
-    <div className="text-white p-4 w-full bg-gray-950">
+    <div className="text-white p-4 w-full bg-gray-900 min-h-screen">
       <h2 className="text-2xl font-bold mb-4 text-center text-black rounded bg-sky-300">Historial de Rutinas</h2>
 
       {historial.length === 0 ? (
@@ -79,6 +80,7 @@ export default function HistorialRutinas() {
           )}
         </div>
       )}
+      <Footer />
     </div>
   );
 }

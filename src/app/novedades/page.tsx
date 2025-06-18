@@ -2,6 +2,8 @@
 import { useNovedades } from "./hook/useNovedades";
 import React, { useState } from 'react';
 import { Novedades } from "@/interface/novedades";
+import Footer from "../components/footer/footer";
+import Image from "next/image";
 
 const LabelNovedades = () => { 
   const { novedades, loading } = useNovedades();
@@ -22,7 +24,8 @@ const LabelNovedades = () => {
     return <p className="text-center mt-4">A entrenar no hay nada nuevo</p>;
   }
   return (
-    <div className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 mx-auto m-5 bg-blue-50 p-4 rounded-lg shadow-lg">
+    <div className="bg-gray-900 min-h-screen">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 mx-auto m-5 bg-blue-50 p-4 rounded-lg shadow-lg ">
       <h1 className="text-black">Novedades</h1>
       {novedades.map((novedad) => (
           <div
@@ -31,11 +34,13 @@ const LabelNovedades = () => {
         >
           {/* Imagen */}
           <div className="sm:w-[200px] w-full h-[150px] sm:h-auto flex-shrink-0">
-            <img
+            <Image
               src={novedad.imagen_url}
               alt={novedad.titulo}
-              className="w-full h-full object-cover"
-            />
+              width={200}
+              height={150}
+              className="w-full h-full object-cover">
+              </Image>
           </div>
           
 
@@ -54,7 +59,8 @@ const LabelNovedades = () => {
               Ver más
             </button>
           </div>
-        </div>
+          <Footer />
+        </div>  
     ))}
     {/*pago modal*/}
       {showModal && selectedNovedad && (
@@ -76,12 +82,15 @@ const LabelNovedades = () => {
             {/* Imagen */}
               <div className="flex flex-col sm:flex-row gap-4">
                 <div className="flex justify-center sm:justify-start sm:w-1/2">
-                  <img
-                    src={selectedNovedad.imagen_url}
-                    alt={selectedNovedad.titulo}
-                    className="w-full h-auto max-w-xs sm:max-w-md rounded-lg border object-contain"
-                  />
+                  <Image
+                  src={selectedNovedad.imagen_url}
+                  alt={selectedNovedad.titulo}
+                  width={200}
+                  height={150}
+                  className="w-full h-auto max-w-xs sm:max-w-md rounded-lg border object-contain"
+                />
                 </div>
+                
                 <div className="sm:w-1/2">
                   <h2 className="text-base sm:text-lg text-white">{selectedNovedad.descripcion}</h2>
                 </div>
@@ -91,6 +100,8 @@ const LabelNovedades = () => {
         </div>
       </div>
       )}
+     
+</div>
 </div>
   );
 }

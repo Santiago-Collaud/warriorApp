@@ -11,4 +11,7 @@ module.exports = withPWA({
   experimental: {
     appDir: true,        // Habilita la carpeta "app"
   },
+  images: {
+    domains: ["res.cloudinary.com"], // ✅ Habilitá el dominio acá
+  },
 });

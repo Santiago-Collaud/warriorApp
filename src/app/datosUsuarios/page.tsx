@@ -4,6 +4,7 @@ import { Usuario } from "../../interface/usuario"; // Asegurate que sea la ruta 
 import { useState } from "react";
 import Image from "next/image"
 import { useRouter } from 'next/navigation';
+import Footer from "../components/footer/footer";
 
 import ModalEditarUsuario from "../components/editDatosUsuario/editDatosUsuario"; // Ruta donde guardamos el modal para editar los datos del usuario
 
@@ -33,7 +34,7 @@ export default function DatosUsuario() {
   }
 
   return (
-    <div className="text-white text-white p-4 w-full">
+    <div className="text-white text-white p-4 w-full bg-gray-900 min-h-screen">
 
       {loading && <p>Cargando...</p>}
       {error && <p>Error: {error}</p>}
@@ -42,9 +43,9 @@ export default function DatosUsuario() {
       {usuarios.map((usuario) => (
         <div
           key={usuario.id}
-          className="bg-black text-white p-4 mt-4 rounded shadow mt-10 mb-20"
+          className="text-white p-4 rounded shadow mt-2 mb-20 "
         >
-          <div className=" rounded p-4 shadow-lg shadow-blue-400/80 bg-gradient-to-t from-blue-300 to-blue-950 ">
+          <div className=" rounded p-4 shadow-lg shadow-red-50/80 bg-gradient-to-t from-red-300 to-blue-950 ">
           
             <div className="grid col-2 flex justify-center items-center">
               <div className="grid col-1 flex justify-center items-center mb-4 ">
@@ -116,7 +117,7 @@ export default function DatosUsuario() {
             </div>
           </div>
           <br />
-          <footer className="border bg-grey-300 rounded-lg p-4 bg-gradient-to-t from-neutral-300 to-neutral-600 flex justify-center items-center">
+          <div className="border bg-grey-300 rounded-lg p-4 mt-6 bg-gradient-to-t from-neutral-300 to-neutral-600 flex justify-center items-center">
             <button onClick={handleAvisoLegal}>
               <div className="mr-2">
                 Legales
@@ -131,8 +132,11 @@ export default function DatosUsuario() {
               <div className="mr-2">
                 Team
               </div>
-            </button>                
-          </footer>
+            </button>              
+          </div>
+            <footer>
+              <Footer/>
+            </footer>  
         </div>
       ))}
 

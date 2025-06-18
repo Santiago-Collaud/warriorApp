@@ -170,7 +170,7 @@ const rememberMe = (checked: boolean) => {
   return (
     <div>
       <div
-        className="min-h-screen flex items-center justify-center px-6"
+        className="min-h-screen flex items-center justify-center"
         style={{
           backgroundImage: "url('/backGrounds/background.webp')",
           backgroundSize: "cover",

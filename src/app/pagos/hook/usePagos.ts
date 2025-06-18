@@ -7,16 +7,14 @@ export const usePago = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
   
+    useEffect(() => {
     const fetchPagos = async () => {
-      //const id_usuario = localStorage.getItem("id_usuario") || ""; // Asumiendo que `id_usuario` es el mismo que `id_cliente`
-      const id_cliente = localStorage.getItem("id_cliente") || ""; // Asumiendo que `id_cliente` es el mismo que `id_usuario`
-      //const id_cliente = 1 ////TENES EL PROBLEMA EN EL ID_CLIENTE DESDE EL LOCAL
-      //console.log("id_cliente front", id_cliente);
-  
+      const id_cliente = localStorage.getItem("id_cliente") || "";
+
       try {
         const response = await fetch(`/api/pagos/getPagosById?id_cliente=${id_cliente}`);
         const result = await response.json();
-  
+
         if (response.ok && !result.sinPagos) {
           setPagos(result.pagos);
         } else if (result.sinPagos) {
@@ -32,10 +30,10 @@ export const usePago = () => {
         setLoading(false);
       }
     };
-  
-    useEffect(() => {
-      fetchPagos();
-    }, []);
+
+    fetchPagos();
+  }, []);
+
 
     return { pagos, loading, error };
     

@@ -1,4 +1,5 @@
 "use client";
+import React, { useEffect,useState } from "react";
 import { usePago } from "./hook/usePagos";
 import Footer from "../components/footer/footer";
 import Image from "next/image";
@@ -6,7 +7,11 @@ import Image from "next/image";
 const LabelDatosUsuario = () => {
  
   const { loading, error, pagos} = usePago(); // Desestructuramos el hook
-  const username=localStorage.getItem("username");
+  const [username, setUsername] = useState<string | null>(null);
+  useEffect(() => {
+    const name = localStorage.getItem("username");
+    setUsername(name);
+  }, []);
 
   return (
     <div className="text-white px-2 sm:px-4 py-4 max-w-full bg-gray-900 min-h-screen">

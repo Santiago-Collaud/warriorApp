@@ -17,7 +17,17 @@ const LabelDatosUsuario = () => {
     <div className="text-white px-2 sm:px-4 py-4 max-w-full bg-gray-900 min-h-screen">
       <h1 className="text-xl font-bold mb-4">Pagos de {username}</h1>
 
-      {loading && <p>Cargando...</p>}
+      {loading && <>
+                <p>Cargando...</p>
+                <Image 
+                  src="/backGrounds/bg-usuarios-app.png" 
+                  alt="logo warrior" 
+                  width={1000} 
+                  height={1000} 
+                  className="rounded-t-lg shadow-xl m-0 p-0 filter brightness-50"
+                  priority 
+                />
+              </>}
       {error && <p className="text-red-500">{error}</p>}
 
       {!loading && pagos.length > 0 && (

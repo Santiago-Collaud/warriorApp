@@ -84,7 +84,7 @@ export default function DatosUsuario() {
                         alt="logo warrior" 
                         width={20} 
                         height={20} 
-                        className="rounded-t-lg shadow-xl"
+                        className="rounded-t-lg shadow-xl m-0 p-0"
                         priority 
                         />
                     </button> 

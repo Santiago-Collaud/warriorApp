@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from 'next/navigation';
+import Image from "next/image";
 import { useRutina } from "./hook/useRutina";
 import { Rutina, Ejercicio } from "@/interface/rutina";
 import { EjercicioSeleccionado } from "@/interface/ejercicioSeleccionado";
@@ -41,7 +42,20 @@ export default function LabelRutina() {
     <div className="text-white p-4">
       {/*<h1 className="text-2xl font-bold mb-4">Rutinas de usuario</h1>*/}
 
-      {loading && <p>Cargando...</p>}
+      {loading && (
+        <>
+          <p>Cargando...</p>
+          <Image 
+            src="/backGrounds/bg-usuarios-app.png" 
+            alt="logo warrior" 
+            width={1000} 
+            height={1000} 
+            className="rounded-t-lg shadow-xl m-0 p-0 filter brightness-50"
+            priority 
+          />
+        </>
+      )}
+
       {error && <p className="text-red-500">Error: {error}</p>}
       {!loading && !error && rutina.length === 0 && <p>No hay rutinas disponibles.</p>}
 

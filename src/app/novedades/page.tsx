@@ -17,7 +17,17 @@ const LabelNovedades = () => {
   }
 
   if (loading) {
-    return <p className="text-center mt-4">Cargando novedades...</p>;
+    return <>
+              <p>Cargando...</p>
+              <Image 
+                src="/backGrounds/bg-usuarios-app.png" 
+                alt="logo warrior" 
+                width={1000} 
+                height={1000} 
+                className="rounded-t-lg shadow-xl m-0 p-0 filter brightness-50"
+                priority 
+              />
+            </>;
   }
 
   if(novedades.length === 0) {

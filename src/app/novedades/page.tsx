@@ -31,7 +31,16 @@ const LabelNovedades = () => {
   }
 
   if(novedades.length === 0) {
-    return <p className="text-center mt-4">A entrenar no hay nada nuevo</p>;
+    return <>
+              <Image 
+                src="/backGrounds/bg-usuarios-app.png" 
+                alt="logo warrior" 
+                width={1000} 
+                height={1000} 
+                className="rounded-t-lg shadow-xl m-0 p-0 filter brightness-50"
+                priority 
+              />
+            </>;;
   }
   return (
     <div className="bg-gray-900 min-h-screen">

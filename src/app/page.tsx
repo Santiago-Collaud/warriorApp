@@ -99,11 +99,36 @@ const rememberMe = (checked: boolean) => {
   };
 
   // Esta función se ejecutará al enviar el formulario del modal
-  const handleAviso = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleAviso = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setModalNuevoUsuario(false);
-    setModalAviso(true);
-  };
+    //setModalNuevoUsuario(false);
+
+    try {
+      const response = await fetch(`/api/verificarUserName?username=${encodeURIComponent(username)}`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+      if (result.exists) {
+        alert('El nombre de usuario ya está en uso. Por favor, elija otro.');
+        return; // no cierra el modal actual
+      } else {
+        setModalNuevoUsuario(false);
+        setModalAviso(true); // pasa a mostrar el modal de aviso
+      }
+    } else {
+      alert(result.error || 'Error al verificar el nombre de usuario.');
+    }
+      
+    }
+    catch (error) {
+      console.error('Error al verificar el username:', error);
+      alert('Error al verificar el username. Por favor, inténtelo de nuevo más tarde.');
+    }
+};
 
   const handleConfirm = async () => {
     if (!nombre || !apellido || !username) {
@@ -124,7 +149,7 @@ const rememberMe = (checked: boolean) => {
       });
       const result = await response.json();
       if (response.ok) {
-        alert('Cliente registrado correctamente');
+        alert('Cliente registrado correctamente, revise su mail o contactese con el gimnasio para mas datos');
         setModalCambioPass(false);
       } else {
         alert(`Error: ${result.error}`);

@@ -389,7 +389,7 @@ const rememberMe = (checked: boolean) => {
           
             <input
               type={showNewPassword ? "text" : "password"}
-              placeholder="Password"
+              placeholder="Nueva Contraseña"
               className="w-full p-3 mb-4 bg-gray-700 text-white rounded focus:outline-none"
               value={newPassword}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewPassword(e.target.value)}
@@ -406,7 +406,7 @@ const rememberMe = (checked: boolean) => {
           </div>
             <input
               type={showNewPassword ? "text" : "password"}
-              placeholder="repetir password"
+              placeholder="repetir Nueva Contraseña"
               className="w-full p-3 mb-4 bg-gray-700 text-white rounded focus:outline-none"
               value={newPasswordConfirm}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewPasswordConfirm(e.target.value)}

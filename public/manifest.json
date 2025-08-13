@@ -2,21 +2,31 @@
     "name": "Warrior App",
     "short_name": "WarriorAPP",
     "description": "Warrior Gym app",
-    "start_url": "/",
+    "start_url": "./",
     "display": "standalone",
-    "background_color": "#ffffff",
+    "background_color": "#746EE0", 
     "theme_color": "#000000",
     "icons": [
-      {
-        "src": "/icons/warrior_ICO_APP.png", 
-        "sizes": "192x192",
-        "type": "image/png"
-      },
-      {
-        "src": "/window.svg", 
-        "sizes": "512x512",
-        "type": "image/png"
-      }
-    ]
+        {
+          "src": "/icons/warrior_ICO_APP-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        },
+        {
+          "src": "/icons/warrior_ICO_APP-256.png",
+          "sizes": "256x256",
+          "type": "image/png"
+        },
+        {
+          "src": "/icons/warrior_ICO_APP-384.png",
+          "sizes": "384x384",
+          "type": "image/png"
+        },
+        {
+          "src": "/icons/warrior_ICO_APP-512.png",
+          "sizes": "512x512",
+          "type": "image/png"
+        }
+      ]
   }
   

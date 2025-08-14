@@ -9,7 +9,7 @@ import Footer from "../components/footer/footer";
 import ModalEditarUsuario from "../components/editDatosUsuario/editDatosUsuario"; // Ruta donde guardamos el modal para editar los datos del usuario
 
 export default function DatosUsuario() {
-  const { loading, error, usuarios, fetchClientes } = useUsuario();
+  const { loading, usuarios, fetchClientes } = useUsuario();
   const [ showModalEditar , setShowModalEditar ] = useState(false);
   const [usuarioSeleccionado, setUsuarioSeleccionado] = useState<Usuario | null>(null);
 

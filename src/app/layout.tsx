@@ -32,10 +32,10 @@ export default function RootLayout({
         <meta name="theme-color" content="#000000" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased max-w-screen overflow-x-hidden min-h-screen`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased max-w-screen overflow-x-hidden min-h-screen `}>
         
-        <div className="w-full max-w-[420px]"> 
-          <header className="bg-slate-900 p-2 flex justify-center shadow-md rounded-md">
+        <div className="w-full max-w-[420px] bg-gray-900"> 
+          <header className="bg-slate-100 p-2 flex justify-center shadow-md rounded-md">
                       <Image 
                         src="/icons/warrior_Title-PNG.png" 
                         alt="logo warrior" 

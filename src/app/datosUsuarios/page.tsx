@@ -9,7 +9,7 @@ import Footer from "../components/footer/footer";
 import ModalEditarUsuario from "../components/editDatosUsuario/editDatosUsuario"; // Ruta donde guardamos el modal para editar los datos del usuario
 
 export default function DatosUsuario() {
-  const { loading, error, usuarios, fetchClientes } = useUsuario();
+  const { loading, usuarios, fetchClientes } = useUsuario();
   const [ showModalEditar , setShowModalEditar ] = useState(false);
   const [usuarioSeleccionado, setUsuarioSeleccionado] = useState<Usuario | null>(null);
 
@@ -33,11 +33,23 @@ export default function DatosUsuario() {
     router.push("/legales/team")
   }
 
+  if (loading) {
+      return <>
+                <Image 
+                  src="/backGrounds/bg-usuarios-app.png" 
+                  alt="logo warrior" 
+                  width={1000} 
+                  height={1000} 
+                  className="rounded-t-lg shadow-xl m-0 p-0 filter brightness-50"
+                  priority 
+                />
+                <Footer/>
+              </>;
+    }
   return (
     <div className="text-white text-white p-4 w-full bg-gray-900 min-h-screen">
 
-      {loading && <p>Cargando...</p>}
-      {error && <p>Error: {error}</p>}
+      
  
 
       {usuarios.map((usuario) => (

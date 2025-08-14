@@ -18,7 +18,6 @@ const LabelNovedades = () => {
 
   if (loading) {
     return <>
-              <p>Cargando...</p>
               <Image 
                 src="/backGrounds/bg-usuarios-app.png" 
                 alt="logo warrior" 
@@ -27,6 +26,7 @@ const LabelNovedades = () => {
                 className="rounded-t-lg shadow-xl m-0 p-0 filter brightness-50"
                 priority 
               />
+              <Footer/>
             </>;
   }
 
@@ -37,14 +37,15 @@ const LabelNovedades = () => {
                 alt="logo warrior" 
                 width={1000} 
                 height={1000} 
-                className="rounded-t-lg shadow-xl m-0 p-0 filter brightness-50"
+                className="rounded-t-lg shadow-xl m-0 p-0 filter brightness-50 "
                 priority 
               />
+              <Footer/>
             </>;;
   }
   return (
-    <div className="bg-gray-900 min-h-screen">
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 mx-auto m-5 bg-blue-50 p-4 rounded-lg shadow-lg ">
+    <div className="bg-gray-900 min-h-screen ">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 mx-auto bg-blue-50 p-4 rounded-lg shadow-lg ">
       <h1 className="text-black">Novedades</h1>
       {novedades.map((novedad) => (
           <div
@@ -78,10 +79,11 @@ const LabelNovedades = () => {
               Ver más
             </button>
           </div>
-          <Footer />
+         <Footer/>
         </div>  
+        
     ))}
-    {/*pago modal*/}
+    {/*modal*/}
       {showModal && selectedNovedad && (
         <div className="modal modal-open">
           <div className="modal-box">
@@ -119,7 +121,6 @@ const LabelNovedades = () => {
         </div>
       </div>
       )}
-     
 </div>
 </div>
   );

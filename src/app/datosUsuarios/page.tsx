@@ -121,7 +121,7 @@ export default function DatosUsuario() {
                   <strong>Factor sanguíneo:</strong> RH{" "}
                   {usuario.clientes?.factor_sanguineo?.factor}
                 </h2>
-                <h2>
+                <h2 className="break-words whitespace-normal">
                   <strong>Observaciones de salud:</strong>{" "}
                   {usuario.clientes?.obs_salud}
                 </h2>

@@ -56,8 +56,8 @@ const InstallButton = () => {
       {showManual && (
         <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center">
           <div className="bg-white p-4 rounded shadow-lg max-w-xs">
-            <h2 className="font-bold mb-2">Instalar manualmente</h2>
-            <p className="text-sm">
+            <h2 className="font-bold mb-2 text-gray-950">Instalar manualmente</h2>
+            <p className="text-sm text-gray-950">
               Abre el menú de tu navegador y selecciona{" "}
               <strong>Agregar a pantalla principal</strong>.
             </p>

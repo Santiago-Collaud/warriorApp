@@ -100,8 +100,11 @@ export default function ModalEditarUsuario({ usuario, onSave, onClose }: ModalEd
             value={clienteEditado.obs_salud || ""}
             onChange={handleChange}
             placeholder="Observaciones sobre la salud"
-            className="textarea textarea-bordered w-full"
+            className="textarea textarea-bordered w-full h-32"
+            wrap="soft"
+            maxLength={250} // límite de 250 caracteres
           />
+          <h5 className="text-sm text-gray-700">Maximo 250 caracteres</h5>
 
           {error && <div className="text-red-500 text-center">{error}</div>}
 

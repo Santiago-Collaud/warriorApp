@@ -9,9 +9,6 @@ const LabelDatosUsuario = () => {
     <div className="text-white p-4">
       <h1 className="text-xl font-bold mb-4">Pagos del Usuario</h1>
 
-      {loading && <p>Cargando...</p>}
-      {error && <p className="text-red-500">{error}</p>}
-
       {!loading && pagos.length > 0 && (
         <div className="overflow-x-auto">
           <table className="min-w-full bg-white text-black rounded shadow">

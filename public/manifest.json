@@ -4,7 +4,7 @@
     "description": "Warrior Gym app",
     "start_url": "./",
     "display": "standalone",
-    "background_color": "#746EE0", 
+    "background_color": "#110F18", 
     "theme_color": "#000000",
     "icons": [
         {
@@ -26,6 +26,29 @@
           "src": "/icons/warrior_ICO_APP-512.png",
           "sizes": "512x512",
           "type": "image/png"
+        }
+      ],
+    "screenshots": [
+        {
+          "src": "/screenshots/screenshot-home.jpeg",
+          "sizes": "714x1599",
+          "type": "image/jpeg",
+          "form_factor": "narrow",
+          "label": "Pantalla de inicio"
+        },
+        {
+          "src": "/screenshots/screenshot-rutina.jpeg",
+          "sizes": "714x1599",
+          "type": "image/jpeg",
+          "form_factor": "narrow",
+          "label": "Vista de rutina"
+        },
+        {
+          "src": "/screenshots/screenshot-historial.jpeg",
+          "sizes": "714x1599",
+          "type": "image/jpeg",
+          "form_factor": "narrow",
+          "label": "Historial de entrenamientos"
         }
       ]
   }

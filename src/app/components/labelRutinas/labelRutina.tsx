@@ -44,7 +44,7 @@ export default function LabelRutina() {
 
       {loading && (
         <>
-          <p>Cargando...</p>
+
           <Image 
             src="/backGrounds/bg-usuarios-app.png" 
             alt="logo warrior" 

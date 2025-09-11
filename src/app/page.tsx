@@ -26,6 +26,7 @@ export default function LoginPage() {
   const [modalNuevoUsuario, setModalNuevoUsuario] = useState(false);
   const [modalAviso, setModalAviso] = useState(false);
   const [modalCambioPass, setModalCambioPass] = useState(false);
+  const [modalInstrucciones, setModalInstrucciones] = useState(false);
 
   const router = useRouter();
 
@@ -149,7 +150,8 @@ const rememberMe = (checked: boolean) => {
       });
       const result = await response.json();
       if (response.ok) {
-        alert('Cliente registrado correctamente, revise su mail o contactese con el gimnasio para mas datos');
+        //alert('Cliente registrado correctamente, IMPORTANTE: revise su mail o contactese con el gimnasio para mas datos');
+        setModalInstrucciones(true);
         setModalCambioPass(false);
       } else {
         alert(`Error: ${result.error}`);
@@ -446,6 +448,33 @@ const rememberMe = (checked: boolean) => {
           </div>
         </div>
       </div>
+      )}
+      {/* MODAL INSTRUCCIONES POST ALTA USUARIO */}
+      {modalInstrucciones && (
+          <div className="modal modal-open">
+          <div className="modal-box">
+              <div className='flex justify-center mb-4 border rounded-lg bg-gray-200'>
+                  <Image src="/icons/Alert.png" alt="Instrucciones" width={100} height={100} />
+              </div>
+
+              <h1 className="text-center text-2xl font-semibold mb-4 bg-gray-300 rounded-lg text-red-700">¡Listo! Solo falta un paso</h1>
+              <p className="text-italic pl-2 pr-2">Tu solicitud ya llegó al administrador.</p>
+              <p className="text-italic pl-2 pr-2">Cuando aprueben tu perfil, vas a recibir un mail con las instrucciones para acceder</p>
+              <p className="text-italic pl-2 pr-2">Revise su correo electrónico </p>
+              <p className="text-italic pl-2 pr-2">Si no lo ves en tu bandeja de entrada, revisá el spam o escribinos para que podamos ayudarte</p>
+              <h1 className="text-italic pl-2 pr-2 mt-4 mb-2 text-lg shadow-lg border flex justify-center">Bienvenido a WarriorApp</h1>
+
+              <div className="flex justify-end mt-4">
+              <button
+                  type="button"
+                  onClick={() => setModalInstrucciones(false)}
+                  className="btn btn-primary w-auto"
+              >
+                  Cerrar
+              </button>
+              </div>
+          </div>
+          </div>
       )}
     </div>
   );

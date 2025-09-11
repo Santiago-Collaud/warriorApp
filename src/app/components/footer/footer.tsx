@@ -121,7 +121,7 @@ export default function Footer() {
           <h4 className="text-white text-sm">Usuario</h4>
         </div>
 
-        <div >
+        <div>
           <LogoutButton />
         </div>
       </footer>

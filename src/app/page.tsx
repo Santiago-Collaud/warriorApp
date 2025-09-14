@@ -2,6 +2,7 @@
 import { useState,useEffect } from "react";
 import Image from "next/image";
 import InstallButton from "./components/installButton/InstallButton";
+import CambiarPass from "./components/cambiarPass/cambiarPass";
 import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
@@ -27,6 +28,7 @@ export default function LoginPage() {
   const [modalAviso, setModalAviso] = useState(false);
   const [modalCambioPass, setModalCambioPass] = useState(false);
   const [modalInstrucciones, setModalInstrucciones] = useState(false);
+  const [modalOlvidePass, setModalOlvidePass] = useState(false);
 
   const router = useRouter();
 
@@ -183,7 +185,7 @@ const rememberMe = (checked: boolean) => {
       });
       const result = await response.json();
       if (response.ok) {
-        alert('cambio de password correcto');
+        alert('cambio de contraseña correcto \nAhora escribe tu nueva contraseña \nA disftutar de WarriorApp');
         setModalCambioPass(false);
       } else {
         alert(`Error: ${result.error}`);
@@ -261,6 +263,12 @@ const rememberMe = (checked: boolean) => {
               className="ml-1 toggle"
             />
             
+          </div>
+          <div>
+            <button onClick={() => setModalOlvidePass(true)} className="text-sm text-white hover:underline mb-4">
+              olvidaste tu contraseña?
+            </button>
+             
           </div>
 
           <button
@@ -475,6 +483,32 @@ const rememberMe = (checked: boolean) => {
               </div>
           </div>
           </div>
+      )}
+      {/* MODAL OLVIDE CONTRASEÑA */}
+      {modalOlvidePass && (
+        <div className="modal modal-open">
+          <div className="modal-box">
+            <div className="flex justify-end mt-4">
+              <button
+                type="button"
+                onClick={() => setModalOlvidePass(false)}
+                className="btn btn-primary w-auto"
+              >
+                X
+              </button>
+              </div>
+
+            <div>
+              <CambiarPass />
+              {/* 
+              <audio controls autoPlay>
+                  <source src="http://sonic.host-live.com:8238/stream" type="audio/aac" />
+                  Tu navegador no soporta el elemento de audio.
+              </audio>*/}
+
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

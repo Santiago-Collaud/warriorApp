@@ -33,8 +33,10 @@ export function useResetPassword() {
       }
 
       setSuccess(true);
-    } catch (err: any) {
-      setError(err.message || "Ocurrió un error");
+    } catch (err) {
+      const message =
+        err instanceof Error ? err.message : "Ocurrió un error inesperado";
+      setError(message);
     } finally {
       setLoading(false);
     }

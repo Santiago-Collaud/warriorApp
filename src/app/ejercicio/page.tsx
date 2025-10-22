@@ -1,3 +1,4 @@
+//este label muestra la rutina en progreso con la funcionalidad de tiempo y lista de ejercicios
 "use client";
 import { useEjercicio } from "../ejercicio/hook/useEjerccios"; // Importamos el hook
 
@@ -6,8 +7,11 @@ export default function EjercicioPage() {
   const { ejercicios,
           tiempo,
           activo,
+          nombreAbs,
+          abCompletado,
           formatTiempo,
           toggleCompletado,
+          toggleAbCompletado,
           actualizarObservacion,
           finalizarRutina,
           setActivo,
@@ -63,8 +67,41 @@ export default function EjercicioPage() {
                   />
                 </td>
                 <td>{ej.nombre}</td>
-                <td>{ej.series || "-"}</td>
+                <td>
+                  {ej.series}
+                  {(() => {
+                    const match = ej.series?.match(/\d+/g); // busca el primer número
+                    const cantidad = match ? Math.max(...match.map(Number)) : 0;
+
+                   
+
+                    if (cantidad > 0) {
+                      return (
+                        <div className="flex gap-1">
+                          {Array.from({ length: cantidad }).map((_, idx) => (
+                            <input
+                              key={idx}
+                              type="checkbox"
+                              className="checkbox checkbox-xs"
+                              onChange={() => {}}
+                            />
+                          ))}
+                        </div>
+                      );
+                    }
+
+                    return (
+                      <input
+                        type="checkbox"
+                        className="checkbox"
+                        onChange={() => {}}
+                      />
+                    );
+                  })()}
+                </td>
+
                 <td>{ej.repeticiones || "-"}</td>
+                
                 <td>
                   <input
                     type="text"
@@ -76,10 +113,25 @@ export default function EjercicioPage() {
                 </td>
               </tr>
             ))}
+            {/* 🧠 Sección de abdominales */}
           </tbody>
         </table>
       </div>
-
+        {/* 🧘‍♂️ Checkbox general de abdominales */}
+        {nombreAbs && (
+          <div className="mt-6 flex flex-col items-center gap-2">
+            <h3 className="text-lg font-semibold">{nombreAbs}</h3>
+            <label className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                checked={abCompletado}
+                onChange={toggleAbCompletado}
+                className="checkbox checkbox-primary"
+              />
+              <span>{abCompletado ? "Completado ✅" : "Pendiente ❌"}</span>
+            </label>
+          </div>
+        )}
       <div className="mt-6 flex justify-center">
         <button onClick={finalizarRutina} className="btn btn-primary">
           Finalizar rutina

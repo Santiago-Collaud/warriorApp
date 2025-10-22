@@ -13,4 +13,5 @@ export interface Ejercicio {
   nombre: string;
   series?: string;
   repeticiones?: string;
+  observaciones?: string;
 }

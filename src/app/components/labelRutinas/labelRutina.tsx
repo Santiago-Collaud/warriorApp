@@ -1,3 +1,4 @@
+//este label muestra la rutina del usuario con opción de comenzar y ver resumen
 "use client";
 import { useState } from "react";
 import { useRouter } from 'next/navigation';
@@ -7,33 +8,32 @@ import { Rutina, Ejercicio } from "@/interface/rutina";
 import { EjercicioSeleccionado } from "@/interface/ejercicioSeleccionado";
 
 export default function LabelRutina() {
-  const { rutina, loading, error } = useRutina();
+  const { rutina, loading, error, fetchRutina, setLoading } = useRutina();
   const [diaSeleccionado, setDiaSeleccionado] = useState<number>(0);
 
   const [, setEjerciciosSeleccionados] = useState<EjercicioSeleccionado[]>([]);
   const router = useRouter();
   
   const handleComenzar = (rutinaItem: Rutina) => {
-    const ejerciciosDia = rutinaItem.dias[diaSeleccionado].ejercicios;
-    const convertidos: EjercicioSeleccionado[] = ejerciciosDia.map((ej) => ({
+  const ejerciciosDia = rutinaItem.dias[diaSeleccionado].ejercicios;
+  const prevRutina = JSON.parse(localStorage.getItem("rutinaDelDia") || "[]");
+
+  const convertidos: EjercicioSeleccionado[] = ejerciciosDia.map((ej) => {
+    const previo = prevRutina.find((p: EjercicioSeleccionado) => p.nombre === ej.nombre);
+    return {
       nombre: ej.nombre,
       series: ej.series,
       repeticiones: ej.repeticiones,
       completado: false,
-      observaciones: "",
-      tiempo: 0,
-    }));
+      observaciones: previo?.observaciones || "",
+      tiempo: previo?.tiempo || 0,
+    };
+  });
 
-    setEjerciciosSeleccionados(convertidos);
-    // Guardar en localStorage
-    localStorage.setItem("rutinaDelDia", JSON.stringify(convertidos));
-
-    // Esto lo vas a cambiar después por router.push y guardar en localStorage
-    //console.log("Ejercicios seleccionados:", convertidos);
-    
-    // Redirigir a la página de ejercicio
-    router.push("/ejercicio");
-  };
+  setEjerciciosSeleccionados(convertidos);
+  localStorage.setItem("rutinaDelDia", JSON.stringify(convertidos));
+  router.push("/ejercicio");
+};
   const handleResumen = () => {
     router.push("/resumenRutina");
   }
@@ -67,6 +67,19 @@ export default function LabelRutina() {
           return (
             <div key={index} className="mb-6 p-4 border border-gray-700 rounded bg-gray-950">
               <h2 className="text-xl font-semibold mb-4">{rutinaItem.titulo}</h2>
+              <div className="flex justify-end mb-4">
+                
+                {/*Botón para actualizar la rutina*/} 
+                <button
+                  className="btn btn-outline btn-sm"
+                  onClick={() => {
+                    setLoading(true);
+                    fetchRutina(true); // 👈 fuerza la actualización desde el backend
+                  }}
+                >
+                  🔄 Actualizar rutina
+                </button>
+              </div>
 
               {/* Select para elegir el día */}
               <div className="mb-4">
@@ -97,6 +110,7 @@ export default function LabelRutina() {
                         <th className="p-2">Ejercicio</th>
                         <th className="p-2">Serie</th>
                         <th className="p-2">Repetición</th>
+                        <th className="p-2">Notas</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -105,6 +119,7 @@ export default function LabelRutina() {
                           <td className="p-2 font-medium">{ej.nombre}</td>
                           <td className="p-2">{ej.series || "-"}</td>
                           <td className="p-2">{ej.repeticiones || "-"}</td>
+                          <td className="p-2">{ej.observaciones || "-"}</td>
                         </tr>
                       ))}
                     </tbody>

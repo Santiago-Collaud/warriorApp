@@ -34,7 +34,7 @@ export default function RootLayout({
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased max-w-screen overflow-x-hidden min-h-screen `}>
         
-        <div className="w-full max-w-[420px] bg-gray-900"> 
+        <div className="w-full bg-gray-900 "> 
           <header className="bg-slate-100 p-2 flex justify-center shadow-md rounded-md">
                       <Image 
                         src="/icons/warrior_Title-PNG.png" 

@@ -10,29 +10,41 @@ export const useEjercicio = () => {
   const [ejercicios, setEjercicios] = useState<EjercicioSeleccionado[]>([]);
   const [tiempo, setTiempo] = useState<number>(0);
   const [activo, setActivo] = useState<boolean>(false);
-  const [inicio, setInicio] = useState<number | null>(null);
 
-  // ✅ Estado para abdominales (solo uno general)
+  // ✅ Estado para abdominales
   const [abCompletado, setAbCompletado] = useState<boolean>(false);
   const [nombreAbs, setNombreAbs] = useState<string | null>(null);
 
   // ⏱️ Cronómetro
   useEffect(() => {
     let interval: NodeJS.Timeout;
+
     if (activo) {
-      if (!inicio) setInicio(Date.now());
       interval = setInterval(() => {
-        if (inicio) setTiempo(Math.floor((Date.now() - inicio) / 1000));
+        setTiempo((prev) => prev + 1);
       }, 1000);
     }
-    return () => clearInterval(interval);
-  }, [activo, inicio]);
 
-  // ⏮️ Cargar rutina desde localStorage
+    return () => clearInterval(interval);
+  }, [activo]);
+
+  // ⏮️ Cargar rutina o progreso guardado
   useEffect(() => {
     const rutinaGuardada: EjercicioSeleccionado[] = JSON.parse(
       localStorage.getItem("rutinaDelDia") || "[]"
     );
+
+    // 🟢 Si hay progreso guardado, priorizar ese
+    const progresoGuardado = localStorage.getItem("progresoRutina");
+    if (progresoGuardado) {
+      const data = JSON.parse(progresoGuardado);
+      setEjercicios(data.ejercicios || []);
+      setTiempo(data.tiempo || 0);
+      if (data.abCompletado !== undefined) setAbCompletado(data.abCompletado);
+      return; // Evita cargar desde cero
+    }
+
+    // 🔄 Si no hay progreso, cargar rutina normalmente
     const historial: ResumenRutina[] = JSON.parse(
       localStorage.getItem("historialRutinas") || "[]"
     );
@@ -55,13 +67,7 @@ export const useEjercicio = () => {
       }
     }
 
-    // Ver si ya estaba marcado en el historial
-    const abHistorial = rutinaHistorial?.ejercicios.find(
-      (e) => e.nombre === nombreAbs
-    );
-    if (abHistorial) setAbCompletado(abHistorial.completado);
-
-    // Merge ejercicios con historial
+    // Merge de ejercicios con historial
     const ejerciciosMerged = rutinaGuardada.map((ej) => {
       const delHistorial = rutinaHistorial?.ejercicios.find(
         (h) => h.nombre === ej.nombre
@@ -69,7 +75,7 @@ export const useEjercicio = () => {
       return {
         ...ej,
         observaciones: delHistorial?.observaciones || ej.observaciones || "",
-        completado: delHistorial?.completado || ej.completado || false,
+        completado: false, // empieza limpia si no hay progreso
       };
     });
 
@@ -84,7 +90,7 @@ export const useEjercicio = () => {
     if (tiempoGuardado) setTiempo(Number(tiempoGuardado));
   }, [router, nombreAbs]);
 
-  // 🧠 Formato de tiempo
+  // 🧠 Formatear tiempo
   const formatTiempo = (segundos: number) => {
     const hrs = Math.floor(segundos / 3600);
     const mins = Math.floor((segundos % 3600) / 60);
@@ -126,13 +132,7 @@ export const useEjercicio = () => {
           observaciones: ej.observaciones || "",
         })),
         ...(nombreAbs
-          ? [
-              {
-                nombre: nombreAbs,
-                completado: abCompletado,
-                //observaciones: abCompletado ? "Hecho ✅" : "No realizado ❌",
-              },
-            ]
+          ? [{ nombre: nombreAbs, completado: abCompletado }]
           : []),
       ],
       duracion: tiempo,
@@ -146,11 +146,8 @@ export const useEjercicio = () => {
       (r) => r.fecha === resumen.fecha
     );
 
-    if (indexExistente >= 0) {
-      historial[indexExistente] = resumen;
-    } else {
-      historial.push(resumen);
-    }
+    if (indexExistente >= 0) historial[indexExistente] = resumen;
+    else historial.push(resumen);
 
     localStorage.setItem("historialRutinas", JSON.stringify(historial));
     localStorage.removeItem("rutinaDelDia");
@@ -159,6 +156,7 @@ export const useEjercicio = () => {
 
   return {
     ejercicios,
+    setEjercicios,
     tiempo,
     activo,
     nombreAbs,

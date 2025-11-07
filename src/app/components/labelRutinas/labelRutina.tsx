@@ -4,36 +4,62 @@ import { useState } from "react";
 import { useRouter } from 'next/navigation';
 import Image from "next/image";
 import { useRutina } from "./hook/useRutina";
-import { Rutina, Ejercicio } from "@/interface/rutina";
+import { Rutina, DiaRutina, Ejercicio } from "@/interface/rutina";
 import { EjercicioSeleccionado } from "@/interface/ejercicioSeleccionado";
+import { ResumenRutina } from "@/interface/ResumenRutina";
 
 export default function LabelRutina() {
   const { rutina, loading, error, fetchRutina, setLoading } = useRutina();
   const [diaSeleccionado, setDiaSeleccionado] = useState<number>(0);
 
-  const [, setEjerciciosSeleccionados] = useState<EjercicioSeleccionado[]>([]);
   const router = useRouter();
   
-  const handleComenzar = (rutinaItem: Rutina) => {
-  const ejerciciosDia = rutinaItem.dias[diaSeleccionado].ejercicios;
-  const prevRutina = JSON.parse(localStorage.getItem("rutinaDelDia") || "[]");
+const handleComenzar = (rutinaItem: Rutina) => {
+  const diaActual: DiaRutina = rutinaItem.dias[diaSeleccionado];
+  const ejerciciosDia: Ejercicio[] = diaActual.ejercicios;
 
-  const convertidos: EjercicioSeleccionado[] = ejerciciosDia.map((ej) => {
-    const previo = prevRutina.find((p: EjercicioSeleccionado) => p.nombre === ej.nombre);
+  // ⚠️ Parsear localStorage con tipos concretos para evitar `any`
+  const prevRutinaJson = localStorage.getItem("rutinaDelDia") || "[]";
+  const prevRutina: EjercicioSeleccionado[] = JSON.parse(prevRutinaJson) as EjercicioSeleccionado[];
+
+  // historial también tipado (si lo usás)
+  const historialJson = localStorage.getItem("historialRutinas") || "[]";
+  const historial: ResumenRutina[] = JSON.parse(historialJson) as ResumenRutina[];
+
+  // Buscar en el historial la última rutina que contenga alguno de los ejercicios actuales
+  const ultimaDelMismoDia = [...historial]
+    .reverse()
+    .find((r: ResumenRutina) =>
+      r.ejercicios.some((ejRut: { nombre: string }) =>
+        ejerciciosDia.some((d: Ejercicio) => d.nombre === ejRut.nombre)
+      )
+    );
+
+  // Mapear ejercicios (sin usar any)
+  const convertidos: EjercicioSeleccionado[] = ejerciciosDia.map((ej: Ejercicio) => {
+    const previo = ultimaDelMismoDia?.ejercicios.find((p: { nombre: string; observaciones?: string; tiempo?: number }) => p.nombre === ej.nombre);
+
     return {
       nombre: ej.nombre,
       series: ej.series,
       repeticiones: ej.repeticiones,
       completado: false,
-      observaciones: previo?.observaciones || "",
-      tiempo: previo?.tiempo || 0,
+      observaciones: previo?.observaciones || prevRutina.find(p => p.nombre === ej.nombre)?.observaciones || ej.observaciones || "",
     };
   });
 
-  setEjerciciosSeleccionados(convertidos);
+  // Guardar
   localStorage.setItem("rutinaDelDia", JSON.stringify(convertidos));
+  localStorage.setItem("diaRutinaActual", diaActual.dia);
+  if (diaActual.abdominales) {
+    localStorage.setItem("abdominalesDelDia", diaActual.abdominales);
+  }
+
+  localStorage.removeItem("abCompletado"); // 👈 fuerza reinicio de abs
   router.push("/ejercicio");
 };
+
+
   const handleResumen = () => {
     router.push("/resumenRutina");
   }
@@ -132,8 +158,9 @@ export default function LabelRutina() {
                   </p>
                 )}
               </div>
-              <div className="flex grid grid-cols-2 gap-4">
-                  <div className="flex jusify-end mb-4">
+              <div className="flex justify-center">
+                <div className="flex grid grid-cols-2 gap-4">
+                  <div className="flex mb-4">
                   <button
                     className="btn btn-soft btn-secondary"
                     onClick={() => {
@@ -143,7 +170,7 @@ export default function LabelRutina() {
                     Comenzar
                   </button>
                 </div>
-                <div className="flex jusify-end mb-4">
+                <div className="flex mb-4">
                   <button
                     className="btn btn-soft btn-secondary"
                     onClick={
@@ -154,6 +181,8 @@ export default function LabelRutina() {
                   </button>
                 </div>
               </div>
+              </div>
+              
               
             </div>
           );

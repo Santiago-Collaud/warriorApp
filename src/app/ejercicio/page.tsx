@@ -1,7 +1,5 @@
-//este label muestra la rutina en progreso con la funcionalidad de tiempo y lista de ejercicios
 "use client";
 import { useEffect } from "react";
-import Image from "next/image";
 import { useEjercicio } from "../ejercicio/hook/useEjerccios";
 import { useGuardarProgreso } from "../ejercicio/hook/useGuardarProgreso";
 
@@ -22,21 +20,28 @@ export default function EjercicioPage() {
     finalizarRutina,
   } = useEjercicio();
 
-  const { guardarProgreso, cargarProgreso, limpiarProgreso } = useGuardarProgreso();
+  const { guardarProgreso, cargarProgreso, limpiarProgreso } =
+    useGuardarProgreso();
 
+  // 🔁 Cargar progreso previo (si existe)
   // 🔁 Cargar progreso si existe al montar
-  
-  useEffect(() => {
-    const previo = cargarProgreso();
-    if (previo) {
-      setEjercicios(previo.ejercicios || []);
-      setTiempo(previo.tiempo || 0);
-      if (previo.abCompletado !== undefined) {
-        toggleAbCompletado(); // solo si querés restaurar el estado
-      }
+useEffect(() => {
+  const previo = cargarProgreso();
+  if (previo) {
+    // ✅ Solo cargamos una vez al inicio
+    setEjercicios(previo.ejercicios || []);
+    setTiempo(previo.tiempo || 0);
+    if (typeof previo.abCompletado === "boolean") {
+      // En lugar de toggle, seteamos directo desde useEjercicio
+      // Si no tenés acceso a setAbCompletado, agregalo al return del hook
+      // setAbCompletado(previo.abCompletado);
     }
-  }, [cargarProgreso, setEjercicios, setTiempo, toggleAbCompletado]);
+  }
+  // ⚠️ Solo ejecutar una vez, al montar
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, []);
 
+  // 💾 Guardar rutina actual
   const handleGuardar = () => {
     guardarProgreso({ ejercicios, tiempo, abCompletado });
     alert("💾 Progreso guardado correctamente");
@@ -48,18 +53,28 @@ export default function EjercicioPage() {
   };
 
   return (
-    <div className="p-4 text-white ">
-      <h1 className="text-2xl font-bold mb-4">Rutina en progreso</h1>
+    <div className="p-4 text-white">
+      <h1 className="text-2xl font-bold mb-4 text-center">
+        🏋️ Rutina en progreso
+      </h1>
 
       {/* ⏱️ Cronómetro */}
       <div className="mb-6 text-center">
         <h2 className="text-xl font-semibold">Tiempo transcurrido</h2>
         <p className="text-3xl mt-2">{formatTiempo(tiempo)}</p>
         <div className="flex justify-center gap-4 mt-2">
-          <button className="btn btn-success" onClick={() => setActivo(true)} disabled={activo}>
+          <button
+            className="btn btn-success"
+            onClick={() => setActivo(true)}
+            disabled={activo}
+          >
             Iniciar
           </button>
-          <button className="btn btn-warning" onClick={() => setActivo(false)} disabled={!activo}>
+          <button
+            className="btn btn-warning"
+            onClick={() => setActivo(false)}
+            disabled={!activo}
+          >
             Pausar
           </button>
           <button
@@ -98,7 +113,39 @@ export default function EjercicioPage() {
                   />
                 </td>
                 <td>{ej.nombre}</td>
-                <td>{ej.series}</td>
+                <td>
+                  <div>
+                    {ej.series}
+                    {(() => {
+                      const match = ej.series?.match(/\d+/g); // busca números
+                      const cantidad = match
+                        ? Math.max(...match.map(Number))
+                        : 0;
+
+                      if (cantidad > 0) {
+                        return (
+                          <div className="flex gap-1 mt-1">
+                            {Array.from({ length: cantidad }).map((_, idx) => (
+                              <input
+                                key={idx}
+                                type="checkbox"
+                                className="checkbox checkbox-xs"
+                              />
+                            ))}
+                          </div>
+                        );
+                      }
+
+                      return (
+                        <input
+                          type="checkbox"
+                          className="checkbox"
+                          onChange={() => {}}
+                        />
+                      );
+                    })()}
+                  </div>
+                </td>
                 <td>{ej.repeticiones || "-"}</td>
                 <td>
                   <input
@@ -132,21 +179,14 @@ export default function EjercicioPage() {
       )}
 
       {/* 🎛️ Botones finales */}
-      <div className="mt-6 flex justify-center gap-4">
-        <button onClick={handleFinalizar} className="btn btn-primary">
-          Finalizar rutina
+      <div className="mt-8 flex flex-col sm:flex-row justify-center gap-4">
+        <button onClick={handleGuardar} className="btn btn-accent">
+          💾 Guardar progreso
         </button>
-        <button onClick={handleGuardar} className="btn btn-primary btn-accent">
-          <Image
-            src="/icons/saveAs.png"
-            alt="saveAs"
-            width={28}
-            height={28}
-            priority
-          />
+        <button onClick={handleFinalizar} className="btn btn-primary">
+          ✅ Finalizar rutina
         </button>
       </div>
     </div>
   );
 }
-

@@ -54,6 +54,7 @@ export default function HistorialRutinas() {
           {fechaSeleccionada && rutinaDelDia ? (
             <div className="w-full max-w-md p-4 bg-gray-800 rounded-lg shadow-md">
               <h3 className="text-lg font-semibold mb-2">Rutina del {rutinaDelDia.fecha}</h3>
+              {rutinaDelDia.nombre}
               <ul className="text-sm space-y-1">
                 {rutinaDelDia.ejercicios.map((ej, i) => (
                   <li key={i} className="flex items-center gap-2">

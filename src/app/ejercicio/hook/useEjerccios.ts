@@ -31,7 +31,9 @@ export const useEjercicio = () => {
     const progreso = JSON.parse(localStorage.getItem("progresoRutina") || "null");
     const rutina = JSON.parse(localStorage.getItem("rutinaDelDia") || "[]");
     const abs = localStorage.getItem("abdominalesDelDia");
+    //const nombreRutina = localStorage.getItem("diaRutinaActual");
 
+    //console.log("Nombre Rutina:", nombreRutina);
     if (progreso?.ejercicios?.length) {
       setEjercicios(progreso.ejercicios);
       setTiempo(progreso.tiempo || 0);
@@ -73,9 +75,12 @@ export const useEjercicio = () => {
     });
   };
 
+  
+
   const finalizarRutina = () => {
     const resumen: ResumenRutina = {
       fecha: new Date().toISOString().split("T")[0],
+      nombre: localStorage.getItem("diaRutinaActual") ?? undefined,
       ejercicios: [
         ...ejercicios.map((ej) => ({
           nombre: ej.nombre,
